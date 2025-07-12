@@ -1,12 +1,6 @@
 import { ThemeProvider } from "next-themes";
 import type { Metadata } from "next";
-import { Comfortaa } from "next/font/google";
 import "./globals.css";
-
-const comfortaa = Comfortaa({
-  subsets: ["latin"],
-  variable: "--font-geist-sans",
-});
 
 export const metadata: Metadata = {
   title: "Nexara",
@@ -20,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${comfortaa.variable} antialiased`}>
+      <body className={`antialiased`}>
         <ThemeProvider attribute="data-theme">{children}</ThemeProvider>
       </body>
     </html>

@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
@@ -8,7 +9,16 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export const HeroSection = () => {
+  const [mounted, setMounted] = React.useState<boolean>(false);
   const { theme } = useTheme();
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <section
@@ -19,6 +29,7 @@ export const HeroSection = () => {
             ? "linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.6) 100%)"
             : "linear-gradient(180deg, transparent 50%, rgba(255,255,255,0.6) 100%)",
       }}
+      aria-label="Hero Section"
     >
       <div className="mx-auto flex h-full w-[90%] flex-col items-center">
         {/* Text Content */}
