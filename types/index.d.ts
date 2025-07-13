@@ -29,3 +29,22 @@ export type PricingPlan = {
   features: string[];
   highlight: boolean;
 };
+
+/* ------------------------------------------ */
+
+export type ContentConfig = {
+  features: FeatureItem[];
+  faq: FAQItem[];
+};
+
+export type FeatureItem = {
+  icon: string;
+  title: string;
+  subtTitle: string;
+  description: string;
+};
+
+export type FAQItem = {
+  question: string;
+  answer: string;
+};

@@ -13,7 +13,7 @@ export const headerNavigationConfig: HeaderNavigationConfig = {
           text: "Dashboard",
         },
         {
-          href: "/pricing",
+          href: "#pricing",
           text: "Pricing",
         },
         {

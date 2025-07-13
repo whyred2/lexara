@@ -1,116 +1,24 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "motion/react";
 
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
-import { buttonVariants } from "@/components/ui/button";
-import { Icons } from "@/components/icons";
-import { cn } from "@/lib/utils";
-
+import { PricingCard } from "@/components/ui/home-ui";
 import { PricingPlan } from "@/types";
-import { PricingTable } from "./pricing-table";
+import { PricingTable } from "@/components/home/pricing-table";
 
 interface PricingSectionProps {
   items?: PricingPlan[];
 }
-
-const PricingCard = ({
-  title,
-  priceMonthly,
-  priceYearly,
-  description,
-  features,
-  highlight,
-  isYearly,
-}: PricingPlan & { isYearly: boolean }) => {
-  return (
-    <div
-      className={cn(
-        "relative flex flex-col overflow-hidden rounded-2xl border bg-white/2.5 p-6 shadow-lg backdrop-blur-md",
-        highlight &&
-          "from-background bg-gradient-to-b to-emerald-950 text-white shadow-[0_0_8px_0px_rgba(0,153,102,0.2)] inset-shadow-[0_0_8px_0px_rgba(0,153,102,0.2)]",
-        highlight ? "border-emerald-600" : "border-white/5",
-      )}
-    >
-      <div className="flex flex-col gap-4">
-        <div
-          className={cn(
-            "w-fit rounded-full p-3",
-
-            title === "Pro" ? "bg-emerald-400" : "bg-white/20",
-          )}
-        >
-          <div
-            className={cn(
-              "size-5 border-3 border-black",
-              title === "Personal" && "rounded-full",
-              title === "Pro" && "rounded-md",
-              title === "Team" && "rotate-45 rounded-md",
-            )}
-          />
-        </div>
-
-        <h3 className="text-2xl font-semibold">{title}</h3>
-        <div className="flex flex-col gap-2">
-          <p className="text-4xl font-extrabold">
-            {isYearly ? priceYearly : priceMonthly}
-          </p>
-          <p className="text-base text-white/60">{description}</p>
-        </div>
-      </div>
-
-      {highlight && (
-        <div className="absolute top-6 right-6 flex items-center gap-2 rounded-full border border-white/10 bg-emerald-600/40 px-3 py-2 font-medium">
-          <Icons.sparkles className="size-5" />
-          Popular
-        </div>
-      )}
-      <button
-        className={cn(
-          highlight &&
-            "rounded-full border-2 border-emerald-500 bg-gradient-to-br from-emerald-600/80 to-emerald-900/80 px-4 py-2 text-white shadow-[0_0_20px_0px_rgba(0,153,102,0.2)] hover:bg-emerald-700",
-          !highlight &&
-            buttonVariants({
-              variant: "outline",
-            }),
-          "mt-6 w-full",
-        )}
-      >
-        {highlight ? "Get Started" : "Select"}
-      </button>
-
-      <div className="my-8 h-px w-full bg-white/5" />
-
-      <ul className="flex-1 space-y-3">
-        {features.map((feat) => (
-          <li key={feat} className="text-foreground flex items-center gap-3">
-            <Icons.check className="text-success size-5" />
-            <span>{feat}</span>
-          </li>
-        ))}
-      </ul>
-
-      {/* Card background */}
-      {highlight && (
-        <motion.div
-          className="absolute top-0 -right-0 -z-10 size-30 translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600 blur-[100px]"
-          initial={{ opacity: 0.2 }}
-          animate={{ opacity: 0.6 }}
-          transition={{ duration: 5, repeat: Infinity, repeatType: "reverse" }}
-        />
-      )}
-    </div>
-  );
-};
 
 export const PricingSection = ({ items }: PricingSectionProps) => {
   const [isYearly, setIsYearly] = React.useState<boolean>(false);
 
   return (
     <section
+      id="pricing"
       className="relative min-h-screen w-full pt-30"
       aria-label="Pricing Section"
     >

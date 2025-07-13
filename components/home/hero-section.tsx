@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 
+import { MacWindow } from "@/components/ui/home-ui";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -48,29 +49,7 @@ export const HeroSection = () => {
           Start for free
         </Link>
         {/* Illustration Mac Window */}
-        <div className="z-10 mt-10 h-full w-full px-25">
-          <div className="relative h-full w-full rounded-t-lg border-t border-black/10 bg-black/10 px-3 pt-9 shadow-2xl backdrop-blur-md dark:border-white/5 dark:bg-white/2.5">
-            <div className="absolute top-3 flex items-center gap-1.5">
-              <div className="flex size-3 items-center justify-center rounded-full bg-neutral-800">
-                <motion.div
-                  className="size-1.5 rounded-full bg-neutral-400/40"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{
-                    duration: 1,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                  }}
-                />
-              </div>
-              <div className="size-3 rounded-full bg-neutral-700" />
-              <div className="size-3 rounded-full bg-neutral-600" />
-            </div>
-            <div className="flex h-full w-full items-center justify-center rounded-t-lg bg-gradient-to-b from-neutral-800 to-neutral-700">
-              Illustration
-            </div>
-          </div>
-        </div>
+        <MacWindow>Illustration</MacWindow>
       </div>
       {/* Background */}
       <div

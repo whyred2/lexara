@@ -7,6 +7,7 @@ import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 import { PricingPlan } from "@/types";
+import { PopularPlan } from "@/components/ui/home-ui";
 
 interface PricingTableProps {
   items?: PricingPlan[];
@@ -60,12 +61,7 @@ export const PricingTable = ({
                   "relative flex flex-col overflow-hidden rounded-2xl bg-white/2.5 p-6",
                 )}
               >
-                {item.highlight && (
-                  <div className="absolute top-6 right-6 flex items-center gap-2 rounded-full border border-white/10 bg-emerald-600/40 px-3 py-2 font-medium">
-                    <Icons.sparkles className="size-5" />
-                    Popular
-                  </div>
-                )}
+                {item.highlight && <PopularPlan />}
                 <div className="flex w-full flex-col items-start gap-4">
                   <div
                     className={cn(
@@ -140,7 +136,8 @@ export const PricingTable = ({
                   <Icons.windows className="size-6 fill-neutral-700" />
                   <Icons.android className="size-6 fill-neutral-700" />
                 </div>
-                <button
+                <motion.button
+                  whileTap={{ scale: 0.99 }}
                   className={cn(
                     plan.highlight &&
                       "rounded-full border-2 border-emerald-500 bg-gradient-to-br from-emerald-600/80 to-emerald-900/80 px-4 py-2 text-white shadow-[0_0_20px_0px_rgba(0,153,102,0.2)] hover:bg-emerald-700",
@@ -152,7 +149,7 @@ export const PricingTable = ({
                   )}
                 >
                   {plan.title === "Personal" ? "Try Now" : "Subscribe Now"}
-                </button>
+                </motion.button>
               </div>
             ))}
           </div>

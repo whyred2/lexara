@@ -3,75 +3,15 @@
 import * as React from "react";
 import { motion } from "motion/react";
 
-import { Icons } from "@/components/icons";
+import { FeaturesItemCard } from "@/components/ui/home-ui";
 
-const FeatureItem = [
-  {
-    icon: "calendarClock",
-    title: "Plan",
-    subtTitle: "Smart scheduling",
-    desctiption:
-      "Create tasks, set deadlines, and group them by goals - everything you need to stay on top of your day. A clear structure keeps you productive and stress-free.",
-  },
-  {
-    icon: "chartNoAxes",
-    title: "Track",
-    subtTitle: "Real-time progress",
-    desctiption:
-      "Visualize your journey with real-time statistics and goal tracking. Celebrate your achievements and stay motivated by seeing how far you've come.",
-  },
-  {
-    icon: "monitorSmartphone",
-    title: "Platform",
-    subtTitle: "Cross-Platform Access",
-    desctiption:
-      "Access your tasks from anywhere - desktop, tablet, or mobile. All your data stays in sync and securely stored in the cloud.",
-  },
-];
+import { FeatureItem } from "@/types";
 
-interface FeatureItemCardProps {
-  icon?: React.ReactNode;
-  title: string;
-  subtTitle: string;
-  desctiption: string;
+interface FeaturesSectionProps {
+  items: FeatureItem[];
 }
 
-const FeaturesItemCard = ({
-  icon,
-  title,
-  subtTitle,
-  desctiption,
-}: FeatureItemCardProps) => {
-  return (
-    <div className="z-10 w-100 rounded-2xl border p-2 shadow-2xl backdrop-blur-md dark:border-white/5 dark:bg-white/2.5">
-      <div className="relative h-full w-full overflow-hidden rounded-lg bg-gradient-to-bl from-emerald-900 to-emerald-400">
-        {/* Icon */}
-
-        <div className="absolute -top-0 -left-12 size-55">
-          {React.createElement(Icons[icon as keyof typeof Icons], {
-            className: "h-full w-full text-emerald-400",
-          })}
-        </div>
-        {/* Content */}
-        <div className="mt-55 flex h-full flex-col items-start gap-4 p-6">
-          <h1
-            className="font-poppins text-7xl font-extrabold text-transparent"
-            style={{
-              WebkitTextStrokeWidth: "1px",
-              WebkitTextStrokeColor: "#fff",
-            }}
-          >
-            {title}
-          </h1>
-          <h2 className="text-3xl font-bold">{subtTitle}</h2>
-          <p className="text-lg text-white/80">{desctiption}</p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const FeaturesSection = () => {
+export const FeaturesSection = ({ items }: FeaturesSectionProps) => {
   return (
     <section
       className="relative min-h-screen w-full bg-gradient-to-b from-emerald-900/20 pt-20"
@@ -79,7 +19,13 @@ export const FeaturesSection = () => {
     >
       <div className="mx-auto flex h-full w-[90%] flex-col items-center gap-10">
         {/* Text Content */}
-        <div className="mb-10 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="mb-10 text-center"
+        >
           <h1 className="max-w-3xl text-center text-4xl font-bold">
             Powerful features designed to help you stay focused and reach your
             goals faster.
@@ -88,16 +34,17 @@ export const FeaturesSection = () => {
             Unlock your productivity with features designed to help you plan,
             track, and achieve your goals effectively.
           </p>
-        </div>
+        </motion.div>
         {/* Cards */}
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-          {FeatureItem.map((item, index) => (
+          {items.map((item, index) => (
             <FeaturesItemCard
               key={index}
               icon={item.icon}
               title={item.title}
               subtTitle={item.subtTitle}
-              desctiption={item.desctiption}
+              desctiption={item.description}
+              index={index}
             />
           ))}
         </div>
