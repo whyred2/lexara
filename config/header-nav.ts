@@ -13,8 +13,12 @@ export const headerNavigationConfig: HeaderNavigationConfig = {
           text: "Dashboard",
         },
         {
-          href: "/donate",
-          text: "Donate",
+          href: "/pricing",
+          text: "Pricing",
+        },
+        {
+          href: "/about",
+          text: "About",
         },
       ],
     },

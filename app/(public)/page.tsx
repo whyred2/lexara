@@ -1,9 +1,9 @@
 import { HeroSection } from "@/components/home/hero-section";
 import { FeaturesSection } from "@/components/home/features-section";
 import { PricingSection } from "@/components/home/pricing-section";
+import { FAQSection } from "@/components/home/faq-section";
 
 import { pricingConfig } from "@/config/pricing";
-import { PricingTable } from "@/components/home/pricing-table";
 
 export default function Home() {
   return (
@@ -11,6 +11,7 @@ export default function Home() {
       <HeroSection />
       <FeaturesSection />
       <PricingSection items={pricingConfig.plans} />
+      <FAQSection />
     </main>
   );
 }

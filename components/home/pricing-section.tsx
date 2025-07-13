@@ -71,7 +71,7 @@ const PricingCard = ({
       <button
         className={cn(
           highlight &&
-            "h-10 rounded-full border border-emerald-500 bg-gradient-to-br from-emerald-600/80 to-emerald-900/80 px-4 py-2 text-white shadow-[0_0_20px_0px_rgba(0,153,102,0.2)] hover:bg-emerald-700",
+            "rounded-full border-2 border-emerald-500 bg-gradient-to-br from-emerald-600/80 to-emerald-900/80 px-4 py-2 text-white shadow-[0_0_20px_0px_rgba(0,153,102,0.2)] hover:bg-emerald-700",
           !highlight &&
             buttonVariants({
               variant: "outline",

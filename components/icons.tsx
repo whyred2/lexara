@@ -15,6 +15,7 @@ import {
   Sparkles,
   User,
   Info,
+  Globe,
   type Icon as LucideIcon,
 } from "lucide-react";
 
@@ -41,6 +42,8 @@ export const Icons = {
 
   user: User,
   info: Info,
+
+  globe: Globe,
 
   windows: (props: React.SVGProps<SVGSVGElement>) => (
     <svg

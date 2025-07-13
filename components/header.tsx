@@ -25,7 +25,7 @@ export const Header = ({ items }: HeaderProps) => {
           </Link>
 
           <nav
-            className="flex items-center justify-between gap-2 rounded-full border border-white/15 bg-black/5 p-1 shadow-xl backdrop-blur-md dark:bg-white/10"
+            className="flex items-center justify-between gap-2 rounded-full border border-white/5 bg-black/5 p-1 shadow-xl backdrop-blur-md dark:bg-white/2.5"
             role="navigation"
             aria-label="Main Navigation"
           >
