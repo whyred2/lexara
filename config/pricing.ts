@@ -3,9 +3,9 @@ import { PricingConfig } from "@/types";
 export const pricingConfig: PricingConfig = {
   plans: [
     {
-      title: "Free",
-      priceMonthly: "$0",
-      priceYearly: "$0",
+      title: "Personal",
+      priceMonthly: "Free",
+      priceYearly: "Free",
       description: "Basic features to manage your tasks and goals.",
       features: [
         "1 user",

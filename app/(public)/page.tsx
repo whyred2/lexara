@@ -3,6 +3,7 @@ import { FeaturesSection } from "@/components/home/features-section";
 import { PricingSection } from "@/components/home/pricing-section";
 
 import { pricingConfig } from "@/config/pricing";
+import { PricingTable } from "@/components/home/pricing-table";
 
 export default function Home() {
   return (

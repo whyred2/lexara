@@ -11,6 +11,7 @@ import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 import { PricingPlan } from "@/types";
+import { PricingTable } from "./pricing-table";
 
 interface PricingSectionProps {
   items?: PricingPlan[];
@@ -30,29 +31,51 @@ const PricingCard = ({
       className={cn(
         "relative flex flex-col overflow-hidden rounded-2xl border bg-white/2.5 p-6 shadow-lg backdrop-blur-md",
         highlight &&
-          "bg-gradient-to-b to-emerald-950 text-white shadow-[0_0_8px_0px_rgba(0,153,102,0.2)] inset-shadow-[0_0_8px_0px_rgba(0,153,102,0.2)]",
+          "from-background bg-gradient-to-b to-emerald-950 text-white shadow-[0_0_8px_0px_rgba(0,153,102,0.2)] inset-shadow-[0_0_8px_0px_rgba(0,153,102,0.2)]",
         highlight ? "border-emerald-600" : "border-white/5",
       )}
     >
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4">
+        <div
+          className={cn(
+            "w-fit rounded-full p-3",
+
+            title === "Pro" ? "bg-emerald-400" : "bg-white/20",
+          )}
+        >
+          <div
+            className={cn(
+              "size-5 border-3 border-black",
+              title === "Personal" && "rounded-full",
+              title === "Pro" && "rounded-md",
+              title === "Team" && "rotate-45 rounded-md",
+            )}
+          />
+        </div>
+
         <h3 className="text-2xl font-semibold">{title}</h3>
-        <p className="text-4xl font-extrabold">
-          {isYearly ? priceYearly : priceMonthly}
-        </p>
-        <p className="text-base text-white/60">{description}</p>
+        <div className="flex flex-col gap-2">
+          <p className="text-4xl font-extrabold">
+            {isYearly ? priceYearly : priceMonthly}
+          </p>
+          <p className="text-base text-white/60">{description}</p>
+        </div>
       </div>
 
       {highlight && (
-        <div className="absolute top-6 right-6 flex items-center gap-2 rounded-lg border border-white/10 bg-emerald-600/40 px-3 py-2 font-medium">
+        <div className="absolute top-6 right-6 flex items-center gap-2 rounded-full border border-white/10 bg-emerald-600/40 px-3 py-2 font-medium">
           <Icons.sparkles className="size-5" />
           Popular
         </div>
       )}
       <button
         className={cn(
-          buttonVariants({
-            variant: highlight ? "default" : "outline",
-          }),
+          highlight &&
+            "h-10 rounded-full border border-emerald-500 bg-gradient-to-br from-emerald-600/80 to-emerald-900/80 px-4 py-2 text-white shadow-[0_0_20px_0px_rgba(0,153,102,0.2)] hover:bg-emerald-700",
+          !highlight &&
+            buttonVariants({
+              variant: "outline",
+            }),
           "mt-6 w-full",
         )}
       >
@@ -73,7 +96,7 @@ const PricingCard = ({
       {/* Card background */}
       {highlight && (
         <motion.div
-          className="absolute top-0 -right-0 -z-10 size-80 translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600 blur-[150px]"
+          className="absolute top-0 -right-0 -z-10 size-30 translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600 blur-[100px]"
           initial={{ opacity: 0.2 }}
           animate={{ opacity: 0.6 }}
           transition={{ duration: 5, repeat: Infinity, repeatType: "reverse" }}
@@ -140,6 +163,8 @@ export const PricingSection = ({ items }: PricingSectionProps) => {
           ))}
         </div>
       </div>
+
+      <PricingTable items={items} isYearly={isYearly} />
     </section>
   );
 };
