@@ -36,7 +36,7 @@ export const HeroSection = () => {
         {/* Text Content */}
         <h1 className="text-6xl leading-tight font-bold">
           Organize your tasks and goals with{" "}
-          <span className="text-primary">Nexara</span>
+          <span className="text-primary">Lexara</span>
         </h1>
         <p className="mx-auto mt-8 text-lg text-black/80 dark:text-white/80">
           A modern tool for task management and goal achievement. Organize your

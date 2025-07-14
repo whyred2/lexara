@@ -20,7 +20,7 @@ export const Footer = () => {
         {/* Top Section - Logo & Newsletter */}
         <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
           <div className="flex flex-col items-center gap-4 md:items-start">
-            <h1 className="text-5xl font-bold">Nexara</h1>
+            <h1 className="text-5xl font-bold">Lexara</h1>
             <p className="max-w-md text-lg text-white/60">
               Organize your tasks and goals with the modern tool for
               productivity.
@@ -187,7 +187,7 @@ export const Footer = () => {
         <div className="px-6 py-8">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="flex items-center gap-4 text-sm text-white/50">
-              <span>© 2025 Nexara. All rights reserved.</span>
+              <span>© 2025 Lexara. All rights reserved.</span>
             </div>
 
             <div className="flex items-center gap-2">

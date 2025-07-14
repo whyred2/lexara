@@ -5,7 +5,7 @@ export const headerNavigationConfig: HeaderNavigationConfig = {
     {
       logo: {
         href: "/",
-        text: "Nexara",
+        text: "Lexara",
       },
       links: [
         {

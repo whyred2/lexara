@@ -26,9 +26,9 @@ export const contentConfig: ContentConfig = {
   ],
   faq: [
     {
-      question: "What is Nexara?",
+      question: "What is Lexara?",
       answer:
-        "Nexara is a modern productivity tool designed to help you organize your tasks and goals efficiently. It combines intuitive design with powerful features to boost your productivity.",
+        "Lexara is a modern productivity tool designed to help you organize your tasks and goals efficiently. It combines intuitive design with powerful features to boost your productivity.",
     },
     {
       question: "How do I get started?",
@@ -38,17 +38,17 @@ export const contentConfig: ContentConfig = {
     {
       question: "Is there a mobile app?",
       answer:
-        "Yes! Nexara has native mobile apps available for both iOS and Android devices. Your data syncs seamlessly across all platforms, so you can stay productive wherever you are.",
+        "Yes! Lexara has native mobile apps available for both iOS and Android devices. Your data syncs seamlessly across all platforms, so you can stay productive wherever you are.",
     },
     {
-      question: "What features does Nexara offer?",
+      question: "What features does Lexara offer?",
       answer:
-        "Nexara offers comprehensive features including task management, project tracking, real-time analytics, team collaboration, custom themes, priority levels, and much more to enhance your productivity.",
+        "Lexara offers comprehensive features including task management, project tracking, real-time analytics, team collaboration, custom themes, priority levels, and much more to enhance your productivity.",
     },
     {
       question: "How can I contact support?",
       answer:
-        "Our support team is here to help! You can reach us via email at support@nexara.com, through the in-app support chat, or visit our comprehensive help center for detailed guides and tutorials.",
+        "Our support team is here to help! You can reach us via email at support@lexara.com, through the in-app support chat, or visit our comprehensive help center for detailed guides and tutorials.",
     },
     {
       question: "Is my data secure?",
