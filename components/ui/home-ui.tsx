@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { motion } from "motion/react";
+import { useLocale, useTranslations } from "next-intl";
 
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
@@ -13,11 +14,15 @@ interface MacWindowProps {
   children?: React.ReactNode;
 }
 
+interface PopularPlanProps {
+  children?: React.ReactNode;
+}
+
 interface FeatureItemCardProps {
   icon: string;
   title: string;
   subtTitle: string;
-  desctiption: string;
+  description: string;
   index?: number;
 }
 
@@ -53,16 +58,17 @@ export const FeaturesItemCard = ({
   icon,
   title,
   subtTitle,
-  desctiption,
+  description,
   index = 0,
 }: FeatureItemCardProps) => {
+  const locale = useLocale();
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.2 }}
       viewport={{ once: true }}
-      className="z-10 w-100 rounded-2xl border p-2 shadow-2xl backdrop-blur-md dark:border-white/5 dark:bg-white/2.5"
+      className="z-10 w-110 rounded-2xl border p-2 shadow-2xl backdrop-blur-md dark:border-white/5 dark:bg-white/2.5"
     >
       <div className="relative h-full w-full overflow-hidden rounded-lg bg-gradient-to-bl from-emerald-900 to-emerald-400">
         {/* Icon */}
@@ -83,26 +89,36 @@ export const FeaturesItemCard = ({
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: index * 0.2 + 0.5 }}
           viewport={{ once: true }}
-          className="mt-55 flex h-full flex-col items-start gap-4 p-6"
+          className="flex h-full flex-col items-start gap-4 p-6 pt-61"
         >
           <h1
-            className="font-sans text-7xl font-extrabold text-transparent"
-            style={{
-              WebkitTextStrokeWidth: "1px",
-              WebkitTextStrokeColor: "#fff",
-            }}
+            className={cn(
+              locale === "ru" && "break-words",
+              locale === "ua" && "break-words",
+              "w-full bg-gradient-to-r from-emerald-700 to-emerald-950 bg-clip-text text-7xl font-extrabold text-transparent",
+            )}
           >
             {title}
           </h1>
-          <h2 className="text-3xl font-bold">{subtTitle}</h2>
-          <p className="text-lg text-white/80">{desctiption}</p>
+          <h2
+            className={cn(
+              locale === "ru" && "min-h-18",
+              locale === "ua" && "min-h-18",
+              "text-3xl font-bold",
+            )}
+          >
+            {subtTitle}
+          </h2>
+          <p className="line-clamp-6 text-lg text-white/80">{description}</p>
         </motion.div>
       </div>
     </motion.div>
   );
 };
 
-export const PopularPlan = () => {
+export const PopularPlan = ({ children }: PopularPlanProps) => {
+  const t = useTranslations("Home.PricingSection");
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -112,12 +128,13 @@ export const PopularPlan = () => {
       className="absolute top-6 right-6 flex items-center gap-2 rounded-full border border-white/10 bg-emerald-600/40 px-3 py-2 font-medium"
     >
       <Icons.sparkles className="size-5" />
-      Popular
+      {children || t("popular")}
     </motion.div>
   );
 };
 
 export const PricingCard = ({
+  type,
   title,
   priceMonthly,
   priceYearly,
@@ -126,17 +143,19 @@ export const PricingCard = ({
   highlight,
   isYearly,
 }: PricingPlan & { isYearly: boolean }) => {
+  const t = useTranslations("Home.PricingSection.pricingCards");
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{
         duration: 0.6,
-        delay: title === "Pro" ? 0.2 : title === "Team" ? 0.4 : 0,
+        delay: type === "pro" ? 0.2 : type === "team" ? 0.4 : 0,
       }}
       viewport={{ once: true }}
       className={cn(
-        "relative flex flex-col overflow-hidden rounded-2xl border bg-white/2.5 p-6 shadow-lg backdrop-blur-md transition-all duration-300",
+        "relative flex max-w-[430px] flex-col overflow-hidden rounded-2xl border bg-white/2.5 p-6 shadow-lg backdrop-blur-md transition-all duration-300",
         highlight &&
           "from-background bg-gradient-to-b to-emerald-950 text-white shadow-[0_0_8px_0px_rgba(0,153,102,0.2)] inset-shadow-[0_0_8px_0px_rgba(0,153,102,0.2)]",
         highlight ? "border-emerald-600" : "border-white/5",
@@ -150,15 +169,15 @@ export const PricingCard = ({
           viewport={{ once: true }}
           className={cn(
             "w-fit rounded-full p-3",
-            title === "Pro" ? "bg-emerald-400" : "bg-white/20",
+            type === "pro" ? "bg-emerald-400" : "bg-white/20",
           )}
         >
           <div
             className={cn(
               "size-5 border-3 border-black",
-              title === "Personal" && "rounded-full",
-              title === "Pro" && "rounded-md",
-              title === "Team" && "rotate-45 rounded-md",
+              type === "personal" && "rounded-full",
+              type === "pro" && "rounded-md",
+              type === "team" && "rotate-45 rounded-md",
             )}
           />
         </motion.div>
@@ -192,7 +211,7 @@ export const PricingCard = ({
           "mt-6 w-full",
         )}
       >
-        {highlight ? "Get Started" : "Select"}
+        {highlight ? t("plans.pro.cta") : t("plans.personal.cta")}
       </motion.button>
 
       <div className="my-8 h-px w-full bg-white/5" />

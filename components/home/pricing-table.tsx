@@ -1,42 +1,46 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 
-import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
-import { cn } from "@/lib/utils";
-
-import { PricingPlan } from "@/types";
+import { buttonVariants } from "@/components/ui/button";
 import { PopularPlan } from "@/components/ui/home-ui";
+
+import { isFeatureIncluded } from "@/lib/price-utils";
+import { cn } from "@/lib/utils";
+import { PricingPlan } from "@/types";
 
 interface PricingTableProps {
   items?: PricingPlan[];
 }
 
-const features = [
-  "Unlimited tasks",
-  "Basic analytics",
-  "Community support",
-  "Cross-platform access",
-  "Priority support",
-  "Team collaboration",
-  "Custom themes",
-  "User roles & permissions",
-  "Dedicated onboarding",
-  "Shared team dashboards",
-];
-
 export const PricingTable = ({
   items,
   isYearly,
 }: PricingTableProps & { isYearly: boolean }) => {
+  const t = useTranslations("Home.PricingSection.pricingTable");
+
+  const features = [
+    t("features.0"),
+    t("features.1"),
+    t("features.2"),
+    t("features.3"),
+    t("features.4"),
+    t("features.5"),
+    t("features.6"),
+    t("features.7"),
+    t("features.8"),
+    t("features.9"),
+  ];
+
   return (
     <div
       className="relative min-h-screen w-full py-30"
       aria-label="Pricing Table"
     >
       <div className="mx-auto flex h-full w-[90%] flex-col items-center gap-10">
-        {/* Pricing Table */}
+        {/* Pricing Table Header */}
         <div className="relative flex w-full max-w-7xl flex-col gap-2">
           <motion.div
             className="absolute top-1/3 left-0 -z-10 size-50 bg-emerald-600 blur-[200px]"
@@ -48,11 +52,9 @@ export const PricingTable = ({
               repeatType: "reverse",
             }}
           />
-
-          {/* Header */}
           <div className="grid grid-cols-4 gap-6">
             <div className="p-6">
-              <h3 className="text-4xl font-bold text-white">Compare Plans</h3>
+              <h3 className="text-4xl font-bold text-white">{t("title")}</h3>
             </div>
             {items?.map((item, index) => (
               <div
@@ -66,25 +68,24 @@ export const PricingTable = ({
                   <div
                     className={cn(
                       "rounded-full bg-white/10 p-3",
-                      item.title === "Personal" && "bg-blue-400",
-                      item.title === "Pro" && "bg-emerald-400",
-                      item.title === "Team" && "bg-violet-400",
+                      item.type === "personal" && "bg-blue-400",
+                      item.type === "pro" && "bg-emerald-400",
+                      item.type === "team" && "bg-violet-400",
                     )}
                   >
                     <div
                       className={cn(
                         "size-5 border-3 border-black",
-                        item.title === "Personal" && "rounded-full",
-                        item.title === "Pro" && "rounded-md",
-                        item.title === "Team" && "rotate-45 rounded-md",
+                        item.type === "personal" && "rounded-full",
+                        item.type === "pro" && "rounded-md",
+                        item.type === "team" && "rotate-45 rounded-md",
                       )}
                     />
                   </div>
-
                   <h4 className="text-2xl">{item.title}</h4>
                   <p className="mt-2 text-4xl font-bold text-white">
-                    {item.title === "Free"
-                      ? "Free"
+                    {item.title === "personal"
+                      ? item.priceMonthly
                       : isYearly
                         ? item.priceYearly
                         : item.priceMonthly}
@@ -93,7 +94,6 @@ export const PricingTable = ({
               </div>
             ))}
           </div>
-
           {/* Feature Rows */}
           {features.map((feature, featureIndex) => (
             <div key={featureIndex} className="grid grid-cols-4 gap-6">
@@ -107,12 +107,7 @@ export const PricingTable = ({
                   key={planIndex}
                   className="flex items-center justify-center rounded-2xl bg-white/2.5"
                 >
-                  {plan.features.includes(feature) ||
-                  (plan.features.includes("Everything in Free") &&
-                    items[0]?.features.includes(feature)) ||
-                  (plan.features.includes("Everything in Pro") &&
-                    (items[0]?.features.includes(feature) ||
-                      items[1]?.features.includes(feature))) ? (
+                  {isFeatureIncluded(plan, feature, items) ? (
                     <Icons.check className="size-5 text-emerald-400" />
                   ) : (
                     <Icons.minus className="size-5 text-white/40" />
@@ -121,7 +116,6 @@ export const PricingTable = ({
               ))}
             </div>
           ))}
-
           {/* Footer with buttons */}
           <div className="grid grid-cols-4 gap-6">
             <div className="p-6"></div>
@@ -141,14 +135,11 @@ export const PricingTable = ({
                   className={cn(
                     plan.highlight &&
                       "rounded-full border-2 border-emerald-500 bg-gradient-to-br from-emerald-600/80 to-emerald-900/80 px-4 py-2 text-white shadow-[0_0_20px_0px_rgba(0,153,102,0.2)] hover:bg-emerald-700",
-                    !plan.highlight &&
-                      buttonVariants({
-                        variant: "outline",
-                      }),
+                    !plan.highlight && buttonVariants({ variant: "outline" }),
                     "w-full",
                   )}
                 >
-                  {plan.title === "Personal" ? "Try Now" : "Subscribe Now"}
+                  {plan.type === "personal" ? t("cta.free") : t("cta.paid")}
                 </motion.button>
               </div>
             ))}

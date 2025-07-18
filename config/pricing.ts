@@ -3,10 +3,11 @@ import { PricingConfig } from "@/types";
 export const pricingConfig: PricingConfig = {
   plans: [
     {
-      title: "Personal",
-      priceMonthly: "Free",
-      priceYearly: "Free",
-      description: "Basic features to manage your tasks and goals.",
+      type: "personal",
+      title: "personal",
+      priceMonthly: "personal",
+      priceYearly: "personal",
+      description: "personal",
       features: [
         "1 user",
         "Unlimited tasks",
@@ -17,10 +18,11 @@ export const pricingConfig: PricingConfig = {
       highlight: false,
     },
     {
-      title: "Pro",
-      priceMonthly: "$4/mo",
-      priceYearly: "$40/yr",
-      description: "Advanced tools for power users.",
+      type: "pro",
+      title: "pro",
+      priceMonthly: "pro",
+      priceYearly: "pro",
+      description: "pro",
       features: [
         "10 users",
         "Everything in Free",
@@ -31,10 +33,11 @@ export const pricingConfig: PricingConfig = {
       highlight: true,
     },
     {
-      title: "Team",
-      priceMonthly: "$10/mo",
-      priceYearly: "$100/yr",
-      description: "Collaborate and grow with your team.",
+      type: "team",
+      title: "team",
+      priceMonthly: "team",
+      priceYearly: "team",
+      description: "team",
       features: [
         "100 users",
         "Everything in Pro",

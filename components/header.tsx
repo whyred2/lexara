@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import { ThemeChanger } from "@/components/theme-changer";
 import { buttonVariants } from "@/components/ui/button";
@@ -15,6 +16,7 @@ interface HeaderProps {
 
 export const Header = ({ items }: HeaderProps) => {
   const { logo, links } = items[0];
+  const t = useTranslations("Header");
 
   return (
     <header className="fixed top-4 left-1/2 z-100 w-[90%] -translate-x-1/2">
@@ -40,7 +42,7 @@ export const Header = ({ items }: HeaderProps) => {
                       "rounded-full",
                     )}
                   >
-                    {link.text}
+                    {t(link.text)}
                   </Link>
                 </li>
               ))}
@@ -51,13 +53,13 @@ export const Header = ({ items }: HeaderProps) => {
                 href={"/sign-in"}
                 className={buttonVariants({ variant: "secondary" })}
               >
-                Sign In
+                {t("auth.signIn")}
               </Link>
               <Link
                 href={"/sign-up"}
                 className={buttonVariants({ variant: "default" })}
               >
-                Sign Up
+                {t("auth.signUp")}
               </Link>
             </div>
           </nav>

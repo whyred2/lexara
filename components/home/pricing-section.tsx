@@ -1,20 +1,23 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations, useLocale } from "next-intl";
 
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
 import { PricingCard } from "@/components/ui/home-ui";
-import { PricingPlan } from "@/types";
 import { PricingTable } from "@/components/home/pricing-table";
 
-interface PricingSectionProps {
-  items?: PricingPlan[];
-}
+import { useTranslatedContent } from "@/hooks/use-translated-content";
 
-export const PricingSection = ({ items }: PricingSectionProps) => {
+import { cn } from "@/lib/utils";
+
+export const PricingSection = () => {
   const [isYearly, setIsYearly] = React.useState<boolean>(false);
+  const { pricing } = useTranslatedContent();
+  const t = useTranslations("Home.PricingSection.pricingCards");
+  const locale = useLocale();
 
   return (
     <section
@@ -25,10 +28,9 @@ export const PricingSection = ({ items }: PricingSectionProps) => {
       {/* Text Content */}
       <div className="mx-auto flex h-full w-[90%] flex-col items-center gap-10">
         <div className="text-center">
-          <h2 className="text-6xl font-bold">Pricing & Plans</h2>
-          <p className="text-foreground/70 dark:text-foreground/50 mt-6 max-w-xl text-lg">
-            Choose the plan that fits your workflow and start achieving more
-            today.
+          <h2 className="text-6xl font-bold">{t("title")}</h2>
+          <p className="text-foreground/70 dark:text-foreground/50 mt-6 max-w-7xl text-lg">
+            {t("description")}
           </p>
         </div>
         {/* Pricing Switcher */}
@@ -37,7 +39,7 @@ export const PricingSection = ({ items }: PricingSectionProps) => {
             htmlFor="pricing-switcher"
             className="justify-self-end text-lg"
           >
-            Monthly
+            {t("priceSwitcher.monthly")}
           </Label>
           <Switch
             id="pricing-switcher"
@@ -47,9 +49,14 @@ export const PricingSection = ({ items }: PricingSectionProps) => {
           />
           <div className="relative flex items-center gap-2 justify-self-start">
             <Label htmlFor="pricing-switcher" className="text-lg">
-              Yearly
+              {t("priceSwitcher.yearly")}
             </Label>
-            <div className="bg-background absolute left-16 rounded-full px-2 py-1 text-xs text-nowrap">
+            <div
+              className={cn(
+                "bg-background absolute rounded-full px-2 py-1 text-xs text-nowrap",
+                locale === "ru" || locale === "ua" ? "left-28" : "left-16",
+              )}
+            >
               <div className="absolute -inset-0.5 -z-10 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-800 shadow-[0_0_10px_0px_rgba(0,153,102,0.4)]" />
               20% off
             </div>
@@ -57,9 +64,10 @@ export const PricingSection = ({ items }: PricingSectionProps) => {
         </div>
         {/* Pricing Cards */}
         <div className="mt-2 grid grid-cols-1 gap-5 md:grid-cols-3">
-          {items?.map((plan, index) => (
+          {pricing?.map((plan, index) => (
             <PricingCard
               key={index}
+              type={plan.type}
               title={plan.title}
               priceMonthly={plan.priceMonthly}
               priceYearly={plan.priceYearly}
@@ -72,7 +80,7 @@ export const PricingSection = ({ items }: PricingSectionProps) => {
         </div>
       </div>
 
-      <PricingTable items={items} isYearly={isYearly} />
+      <PricingTable items={pricing} isYearly={isYearly} />
     </section>
   );
 };

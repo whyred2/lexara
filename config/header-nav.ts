@@ -10,15 +10,15 @@ export const headerNavigationConfig: HeaderNavigationConfig = {
       links: [
         {
           href: "/dashboard",
-          text: "Dashboard",
+          text: "dashboard",
         },
         {
           href: "#pricing",
-          text: "Pricing",
+          text: "pricing",
         },
         {
           href: "/about",
-          text: "About",
+          text: "about",
         },
       ],
     },

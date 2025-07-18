@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import { useLanguageSwitcher } from "@/hooks/use-language-switcher";
 
 import {
   Select,
@@ -13,6 +17,23 @@ import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 export const Footer = () => {
+  const locale = useLocale();
+  const t = useTranslations("Footer");
+  const { currentLocale, switchLanguage } = useLanguageSwitcher();
+
+  const getLanguageDisplayName = (locale: string) => {
+    switch (locale) {
+      case "en":
+        return "English";
+      case "ru":
+        return "Русский";
+      case "ua":
+        return "Українська";
+      default:
+        return "English";
+    }
+  };
+
   return (
     <footer className="relative mt-20 w-full bg-gradient-to-b to-emerald-950">
       {/* Main Footer Content */}
@@ -21,20 +42,19 @@ export const Footer = () => {
         <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
           <div className="flex flex-col items-center gap-4 md:items-start">
             <h1 className="text-5xl font-bold">Lexara</h1>
-            <p className="max-w-md text-lg text-white/60">
-              Organize your tasks and goals with the modern tool for
-              productivity.
-            </p>
+            <p className="max-w-md text-lg text-white/60">{t("tagline")}</p>
           </div>
 
           {/* Newsletter Signup */}
           <div className="flex flex-col items-center gap-4 md:items-end">
             <form className="flex w-full max-w-md flex-col gap-3">
-              <h3 className="text-right text-xl font-semibold">Stay updated</h3>
+              <h3 className="text-right text-xl font-semibold">
+                {t("newsletter.title")}
+              </h3>
               <div className="flex gap-2">
                 <Input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={t("newsletter.placeholder")}
                   className="w-80 flex-1"
                 />
                 <button
@@ -43,13 +63,13 @@ export const Footer = () => {
                     "px-6 whitespace-nowrap",
                   )}
                 >
-                  Subscribe
+                  {t("newsletter.subscribe")}
                 </button>
               </div>
               <p className="text-right text-sm text-white/50">
-                By subscribing you agree to our{" "}
+                {t("newsletter.privacy")}{" "}
                 <Link href="/" className="text-emerald-400 hover:underline">
-                  Privacy Policy
+                  {t("legal.privacy")}
                 </Link>
               </p>
             </form>
@@ -61,121 +81,121 @@ export const Footer = () => {
         {/* Links Grid */}
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
           <div className="flex flex-col gap-4">
-            <h3 className="text-xl font-semibold">Company</h3>
+            <h3 className="text-xl font-semibold">{t("company.title")}</h3>
             <div className="flex flex-col gap-2">
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                About
+                {t("company.about")}
               </Link>
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Careers
+                {t("company.careers")}
               </Link>
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Blog
+                {t("company.blog")}
               </Link>
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Contact
+                {t("company.contact")}
               </Link>
             </div>
           </div>
 
           <div className="flex flex-col gap-4">
-            <h3 className="text-xl font-semibold">Products</h3>
+            <h3 className="text-xl font-semibold">{t("products.title")}</h3>
             <div className="flex flex-col gap-2">
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Desktop App
+                {t("products.desktop")}
               </Link>
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Mobile App
+                {t("products.mobile")}
               </Link>
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Web App
+                {t("products.web")}
               </Link>
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                API
+                {t("products.api")}
               </Link>
             </div>
           </div>
 
           <div className="flex flex-col gap-4">
-            <h3 className="text-xl font-semibold">Support</h3>
+            <h3 className="text-xl font-semibold">{t("support.title")}</h3>
             <div className="flex flex-col gap-2">
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Help Center
+                {t("support.help")}
               </Link>
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Documentation
+                {t("support.docs")}
               </Link>
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Community
+                {t("support.community")}
               </Link>
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Status
+                {t("support.status")}
               </Link>
             </div>
           </div>
 
           <div className="flex flex-col gap-4">
-            <h3 className="text-xl font-semibold">Legal</h3>
+            <h3 className="text-xl font-semibold">{t("legal.title")}</h3>
             <div className="flex flex-col gap-2">
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Privacy Policy
+                {t("legal.privacy")}
               </Link>
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Terms of Service
+                {t("legal.terms")}
               </Link>
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Cookie Policy
+                {t("legal.cookies")}
               </Link>
               <Link
                 href="/"
                 className="text-white/60 transition-colors hover:text-white"
               >
-                Security
+                {t("legal.security")}
               </Link>
             </div>
           </div>
@@ -187,19 +207,29 @@ export const Footer = () => {
         <div className="px-6 py-8">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="flex items-center gap-4 text-sm text-white/50">
-              <span>© 2025 Lexara. All rights reserved.</span>
+              <span>{t("copyright")}</span>
             </div>
 
             <div className="flex items-center gap-2">
-              <Select defaultValue="en">
-                <SelectTrigger className="w-42" aria-label="Language Selector">
+              <Select
+                value={currentLocale}
+                onValueChange={(value) => switchLanguage(value as any)}
+              >
+                <SelectTrigger
+                  className={cn(
+                    locale === "ru" || locale === "ua" ? "w-46" : "w-40",
+                  )}
+                  aria-label="Language Selector"
+                >
                   <Icons.globe className="h-5 w-5" />
-                  <SelectValue />
+                  <SelectValue>
+                    {getLanguageDisplayName(currentLocale)}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="en">English</SelectItem>
-                  <SelectItem value="es">Ukrainian</SelectItem>
-                  <SelectItem value="fr">Russian</SelectItem>
+                  <SelectItem value="ua">Українська</SelectItem>
+                  <SelectItem value="ru">Русский</SelectItem>
                 </SelectContent>
               </Select>
             </div>

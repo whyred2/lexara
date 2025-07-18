@@ -1,0 +1,185 @@
+{
+  "Home": {
+    "HeroSection": {
+      "title": "Organize your tasks and goals with",
+      "subtitle": "A modern tool for task management and goal achievement. Organize your life effectively and easily.",
+      "cta": "Start for free"
+    },
+    "FeaturesSection": {
+      "title": "Powerful features designed to help you stay focused and reach your goals faster.",
+      "description": "Unlock your productivity with features designed to help you plan, track, and achieve your goals effectively.",
+      "cards": {
+        "plan": {
+          "title": "Plan",
+          "subtitle": "Smart scheduling",
+          "description": "Create tasks, set deadlines, and group them by goals - everything you need to stay on top of your day. A clear structure keeps you productive and stress-free."
+        },
+        "track": {
+          "title": "Track",
+          "subtitle": "Real-time progress",
+          "description": "Visualize your journey with real-time statistics and goal tracking. Celebrate your achievements and stay motivated by seeing how far you've come."
+        },
+        "platform": {
+          "title": "Platform",
+          "subtitle": "Cross-Platform Access",
+          "description": "Access your tasks from anywhere - desktop, tablet, or mobile. All your data stays in sync and securely stored in the cloud."
+        }
+      }
+    },
+    "PricingSection": {
+      "popular": "Popular",
+      "pricingCards": {
+        "title": "Pricing & Plans",
+        "description": "Choose the plan that fits your workflow and start achieving more today.",
+        "priceSwitcher": {
+          "monthly": "Monthly",
+          "yearly": "Yearly"
+        },
+        "plans": {
+          "personal": {
+            "title": "Personal",
+            "priceMonthly": "Free",
+            "priceYearly": "Free",
+            "description": "Basic features to manage your tasks and goals.",
+            "features": [
+              "1 user",
+              "Unlimited tasks",
+              "Basic analytics",
+              "Community support",
+              "Cross-platform access"
+            ],
+            "cta": "Select"
+          },
+          "pro": {
+            "title": "Pro",
+            "priceMonthly": "$10/mo",
+            "priceYearly": "$100/yr",
+            "description": "Advanced tools for power users.",
+            "features": [
+              "10 users",
+              "Everything in Personal",
+              "Priority support",
+              "Team collaboration",
+              "Custom themes"
+            ],
+            "cta": "Get Started"
+          },
+          "team": {
+            "title": "Team",
+            "priceMonthly": "$25/mo",
+            "priceYearly": "$250/yr",
+            "description": "Collaborate and grow with your team.",
+            "features": [
+              "100 users",
+              "Everything in Pro",
+              "User roles & permissions",
+              "Dedicated onboarding",
+              "Shared team dashboards"
+            ],
+            "cta": "Select"
+          }
+        }
+      },
+      "pricingTable": {
+        "title": "Compare Plans",
+        "features": [
+          "Unlimited tasks",
+          "Basic analytics",
+          "Community support",
+          "Cross-platform access",
+          "Priority support",
+          "Team collaboration",
+          "Custom themes",
+          "User roles & permissions",
+          "Dedicated onboarding",
+          "Shared team dashboards"
+        ],
+        "cta": {
+          "free": "Try Now",
+          "paid": "Subscribe Now"
+        }
+      }
+    },
+    "FAQSection": {
+      "title": "Frequently Asked Questions",
+      "description": "Find answers to common questions about Lexara and how it can help you stay organized.",
+      "items": [
+        {
+          "question": "What is Lexara?",
+          "answer": "Lexara is a modern productivity tool designed to help you organize your tasks and goals efficiently. It combines intuitive design with powerful features to boost your productivity."
+        },
+        {
+          "question": "How do I get started?",
+          "answer": "Getting started is easy! Simply sign up for a free account on our website, create your first project, and start adding tasks."
+        },
+        {
+          "question": "Is there a mobile app?",
+          "answer": "Yes! Lexara has native mobile apps available for both iOS and Android devices. Your data syncs seamlessly across all platforms, so you can stay productive wherever you are."
+        },
+        {
+          "question": "What features does Lexara offer?",
+          "answer": "Lexara offers comprehensive features including task management, project tracking, real-time analytics, team collaboration, custom themes, priority levels, and much more to enhance your productivity."
+        },
+        {
+          "question": "How can I contact support?",
+          "answer": "Our support team is here to help! You can reach us via email at support@lexara.com, through the in-app support chat, or visit our comprehensive help center for detailed guides and tutorials."
+        },
+        {
+          "question": "Is my data secure?",
+          "answer": "Absolutely! We use industry-standard encryption to protect your data both in transit and at rest. Your privacy is our priority, and we never share your personal information with third parties."
+        }
+      ],
+      "contact": {
+        "title": "Still have questions?",
+        "cta": "Contact Us"
+      }
+    }
+  },
+  "Header": {
+    "dashboard": "Dashboard",
+    "pricing": "Pricing",
+    "about": "About",
+    "auth": {
+      "signIn": "Sign In",
+      "signUp": "Sign Up"
+    }
+  },
+  "Footer": {
+    "tagline": "Organize your tasks and goals with the modern tool for productivity.",
+    "newsletter": {
+      "title": "Stay updated",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe",
+      "privacy": "By subscribing you agree to our"
+    },
+    "company": {
+      "title": "Company",
+      "about": "About",
+      "careers": "Careers",
+      "blog": "Blog",
+      "contact": "Contact"
+    },
+    "products": {
+      "title": "Products",
+      "desktop": "Desktop App",
+      "mobile": "Mobile App",
+      "web": "Web App",
+      "api": "API"
+    },
+    "support": {
+      "title": "Support",
+      "help": "Help Center",
+      "docs": "Documentation",
+      "community": "Community",
+      "status": "Status"
+    },
+    "legal": {
+      "title": "Legal",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookies": "Cookie Policy",
+      "security": "Security"
+    },
+    "copyright": "© 2025 Lexara. All rights reserved."
+  }
+}

@@ -22,6 +22,7 @@ export type PricingConfig = {
 };
 
 export type PricingPlan = {
+  type: "personal" | "pro" | "team";
   title: string;
   priceMonthly: string;
   priceYearly: string;

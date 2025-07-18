@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
+
+import { useTranslatedContent } from "@/hooks/use-translated-content";
 
 import {
   Accordion,
@@ -10,13 +13,10 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 
-import { FAQItem } from "@/types";
+export const FAQSection = () => {
+  const t = useTranslations("Home.FAQSection");
+  const { faq } = useTranslatedContent();
 
-interface FAQSectionProps {
-  items: FAQItem[];
-}
-
-export const FAQSection = ({ items }: FAQSectionProps) => {
   return (
     <section
       className="relative min-h-screen w-full py-20"
@@ -24,7 +24,7 @@ export const FAQSection = ({ items }: FAQSectionProps) => {
     >
       <div className="mx-auto w-[90%] max-w-4xl">
         {/* Header */}
-        <div className="mb-16 flex flex-col items-center gap-4 text-center">
+        <div className="mb-16 flex max-w-7xl flex-col items-center gap-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -32,13 +32,8 @@ export const FAQSection = ({ items }: FAQSectionProps) => {
             viewport={{ once: true }}
           >
             <h2 className="text-lg font-medium text-emerald-400">FAQ</h2>
-            <h1 className="mt-2 text-5xl font-bold">
-              Frequently Asked Questions
-            </h1>
-            <p className="mt-4 max-w-2xl text-lg text-white/70">
-              Find answers to common questions about Nexara and how it can help
-              you stay organized.
-            </p>
+            <h1 className="mt-2 text-5xl font-bold">{t("title")}</h1>
+            <p className="mt-4 text-lg text-white/70">{t("description")}</p>
           </motion.div>
         </div>
 
@@ -50,7 +45,7 @@ export const FAQSection = ({ items }: FAQSectionProps) => {
           viewport={{ once: true }}
         >
           <Accordion type="multiple" className="flex w-full flex-col gap-4">
-            {items.map((item, index) => (
+            {faq.map((item, index) => (
               <AccordionItem
                 key={`item-${index + 1}`}
                 value={`item-${index + 1}`}
@@ -75,12 +70,12 @@ export const FAQSection = ({ items }: FAQSectionProps) => {
           className="mt-16 text-center"
         >
           <p className="text-lg text-white/70">
-            Still have questions?{" "}
+            {t("contact.title")}{" "}
             <Link
               href="/contact"
               className="font-semibold text-emerald-400 hover:underline"
             >
-              Contact Us
+              {t("contact.cta")}
             </Link>
           </p>
         </motion.div>

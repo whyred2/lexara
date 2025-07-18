@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 
 import { MacWindow } from "@/components/ui/home-ui";
 import { buttonVariants } from "@/components/ui/button";
@@ -12,6 +13,7 @@ import { cn } from "@/lib/utils";
 export const HeroSection = () => {
   const [mounted, setMounted] = React.useState<boolean>(false);
   const { theme } = useTheme();
+  const t = useTranslations("Home.HeroSection");
 
   React.useEffect(() => {
     setMounted(true);
@@ -35,18 +37,16 @@ export const HeroSection = () => {
       <div className="mx-auto flex h-full w-[90%] flex-col items-center">
         {/* Text Content */}
         <h1 className="text-6xl leading-tight font-bold">
-          Organize your tasks and goals with{" "}
-          <span className="text-primary">Lexara</span>
+          {t("title")} <span className="text-primary">Lexara</span>
         </h1>
         <p className="mx-auto mt-8 text-lg text-black/80 dark:text-white/80">
-          A modern tool for task management and goal achievement. Organize your
-          life effectively and easily.
+          {t("subtitle")}
         </p>
         <Link
           href="/"
           className={cn(buttonVariants({ variant: "default" }), "mt-6 text-lg")}
         >
-          Start for free
+          {t("cta")}
         </Link>
         {/* Illustration Mac Window */}
         <MacWindow>Illustration</MacWindow>

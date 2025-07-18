@@ -2,16 +2,15 @@
 
 import * as React from "react";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
+import { useTranslatedContent } from "@/hooks/use-translated-content";
 
 import { FeaturesItemCard } from "@/components/ui/home-ui";
 
-import { FeatureItem } from "@/types";
+export const FeaturesSection = () => {
+  const t = useTranslations("Home.FeaturesSection");
+  const { features } = useTranslatedContent();
 
-interface FeaturesSectionProps {
-  items: FeatureItem[];
-}
-
-export const FeaturesSection = ({ items }: FeaturesSectionProps) => {
   return (
     <section
       className="relative min-h-screen w-full bg-gradient-to-b from-emerald-900/20 pt-20"
@@ -24,26 +23,22 @@ export const FeaturesSection = ({ items }: FeaturesSectionProps) => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mb-10 text-center"
+          className="mb-10 max-w-7xl text-center"
         >
-          <h1 className="max-w-3xl text-center text-4xl font-bold">
-            Powerful features designed to help you stay focused and reach your
-            goals faster.
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg text-white/80">
-            Unlock your productivity with features designed to help you plan,
-            track, and achieve your goals effectively.
+          <h1 className="text-center text-4xl font-bold">{t("title")}</h1>
+          <p className="mt-4 text-center text-lg text-white/80">
+            {t("description")}
           </p>
         </motion.div>
         {/* Cards */}
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-          {items.map((item, index) => (
+          {features.map((item, index) => (
             <FeaturesItemCard
               key={index}
               icon={item.icon}
               title={item.title}
               subtTitle={item.subtTitle}
-              desctiption={item.description}
+              description={item.description}
               index={index}
             />
           ))}

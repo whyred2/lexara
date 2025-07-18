@@ -4,24 +4,21 @@ export const contentConfig: ContentConfig = {
   features: [
     {
       icon: "calendarClock",
-      title: "Plan",
-      subtTitle: "Smart scheduling",
-      description:
-        "Create tasks, set deadlines, and group them by goals - everything you need to stay on top of your day. A clear structure keeps you productive and stress-free.",
+      title: "plan",
+      subtTitle: "plan",
+      description: "plan",
     },
     {
       icon: "chartNoAxes",
-      title: "Track",
-      subtTitle: "Real-time progress",
-      description:
-        "Visualize your journey with real-time statistics and goal tracking. Celebrate your achievements and stay motivated by seeing how far you've come.",
+      title: "track",
+      subtTitle: "track",
+      description: "track",
     },
     {
       icon: "monitorSmartphone",
-      title: "Platform",
-      subtTitle: "Cross-Platform Access",
-      description:
-        "Access your tasks from anywhere - desktop, tablet, or mobile. All your data stays in sync and securely stored in the cloud.",
+      title: "platform",
+      subtTitle: "platform",
+      description: "platform",
     },
   ],
   faq: [
