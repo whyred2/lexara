@@ -213,7 +213,9 @@ export const Footer = () => {
             <div className="flex items-center gap-2">
               <Select
                 value={currentLocale}
-                onValueChange={(value) => switchLanguage(value as any)}
+                onValueChange={(value: "en" | "ru" | "ua") =>
+                  switchLanguage(value)
+                }
               >
                 <SelectTrigger
                   className={cn(
