@@ -3,6 +3,14 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  turbopack: {
+    rules: {
+      "*svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.ts",
+      },
+    },
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();
