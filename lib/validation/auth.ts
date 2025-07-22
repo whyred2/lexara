@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-export const createUserAuthSchema = (t: any) => {
+export const createUserAuthSchema = (t: (key: string) => string) => {
   return z
     .object({
       name: z.string().min(1, t("nameRequired")),

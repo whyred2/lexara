@@ -145,6 +145,7 @@ export const AuthForm = ({ isSignIn }: AuthFormProps) => {
       router.push("/dashboard?mode=guest");
     } catch (error) {
       toast.error(tMessages("errors.guestSignInFailed"));
+      console.error("Guest sign-in error:", error);
     } finally {
       setIsLoading(false);
     }
