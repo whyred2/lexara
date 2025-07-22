@@ -135,13 +135,76 @@
       }
     }
   },
+  "Auth": {
+    "signIn": {
+      "title": "З поверненням",
+      "subtitle": "Увійдіть у свій акаунт, щоб продовжити",
+      "submitButton": "Увійти",
+      "noAccount": "Немає акаунта?",
+      "signUpLink": "Зареєструватися"
+    },
+    "signUp": {
+      "title": "Приєднуйтеся до Lexara",
+      "subtitle": "Створіть акаунт і почніть організовувати",
+      "submitButton": "Зареєструватися",
+      "alreadyHaveAccount": "Вже є акаунт?",
+      "signInLink": "Увійти"
+    },
+    "form": {
+      "name": "Ім'я",
+      "namePlaceholder": "Введіть ваше повне ім'я",
+      "email": "Email",
+      "emailPlaceholder": "Введіть ваш email",
+      "password": "Пароль",
+      "passwordPlaceholder": "Введіть ваш пароль",
+      "confirmPassword": "Підтвердіть пароль",
+      "confirmPasswordPlaceholder": "Підтвердіть ваш пароль",
+      "forgotPassword": "Забули пароль?",
+      "continueWith": "або продовжте з",
+      "signIn": {
+        "guestMode": "Увійти як гість",
+        "submitting": "Вхід...",
+        "button": "Увійти"
+      },
+      "signUp": {
+        "submitting": "Створення акаунта...",
+        "button": "Створити акаунт"
+      }
+    },
+    "messages": {
+      "success": {
+        "signedIn": "Ласкаво просимо!",
+        "accountCreated": "Акаунт успішно створено!",
+        "guestMode": "Ласкаво просимо, гість!"
+      },
+      "errors": {
+        "invalidCredentials": "Невірний email або пароль",
+        "accessDenied": "Доступ заборонено",
+        "generalError": "Щось пішло не так. Спробуйте ще раз.",
+        "registrationFailed": "Помилка реєстрації",
+        "guestSignInFailed": "Не вдалося увійти як гість",
+        "submissionError": "Сталася помилка. Спробуйте ще раз."
+      },
+      "info": {
+        "forgotPasswordSoon": "Функція відновлення пароля з'явиться незабаром!"
+      }
+    },
+    "validation": {
+      "nameRequired": "Ім'я обов'язкове",
+      "emailInvalid": "Невірна email адреса",
+      "passwordMinLength": "Пароль повинен містити мінімум 6 символів",
+      "confirmPasswordMinLength": "Пароль повинен містити мінімум 6 символів",
+      "passwordsNotMatch": "Паролі не співпадають"
+    }
+  },
   "Header": {
     "dashboard": "Панель",
     "pricing": "Ціни",
     "about": "Про нас",
     "auth": {
       "signIn": "Увійти",
-      "signUp": "Зареєструватись"
+      "signUp": "Зареєструватися",
+      "signOut": "Вийти"
     }
   },
   "Footer": {

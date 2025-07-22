@@ -3,6 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { useSession, signOut } from "next-auth/react";
 
 import { ThemeChanger } from "@/components/theme-changer";
 import { buttonVariants } from "@/components/ui/button";
@@ -17,6 +18,9 @@ interface HeaderProps {
 export const Header = ({ items }: HeaderProps) => {
   const { logo, links } = items[0];
   const t = useTranslations("Header");
+  const session = useSession();
+
+  const isAuthenticated = session.status === "authenticated";
 
   return (
     <header className="fixed top-4 left-1/2 z-100 w-[90%] -translate-x-1/2">
@@ -48,20 +52,25 @@ export const Header = ({ items }: HeaderProps) => {
               ))}
             </ul>
             <div className="h-10 w-px bg-black/60 dark:bg-white/60" />
-            <div className="flex gap-2">
-              <Link
-                href={"/sign-in"}
-                className={buttonVariants({ variant: "secondary" })}
-              >
-                {t("auth.signIn")}
-              </Link>
-              <Link
-                href={"/sign-up"}
-                className={buttonVariants({ variant: "default" })}
-              >
-                {t("auth.signUp")}
-              </Link>
-            </div>
+            {isAuthenticated ? (
+              <div className="flex gap-2">
+                <button
+                  onClick={() => signOut()}
+                  className={buttonVariants({ variant: "default" })}
+                >
+                  {t("auth.signOut")}
+                </button>
+              </div>
+            ) : (
+              <div className="flex gap-2">
+                <Link
+                  href={"/auth"}
+                  className={buttonVariants({ variant: "default" })}
+                >
+                  {t("auth.signUp")}
+                </Link>
+              </div>
+            )}
           </nav>
         </div>
       )}

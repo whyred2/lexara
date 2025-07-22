@@ -141,7 +141,8 @@
     "about": "О нас",
     "auth": {
       "signIn": "Войти",
-      "signUp": "Зарегистрироваться"
+      "signUp": "Зарегистрироваться",
+      "signOut": "Выйти"
     }
   },
   "Footer": {
@@ -181,5 +182,67 @@
       "security": "Безопасность"
     },
     "copyright": "© 2025 Lexara. Все права защищены."
+  },
+  "Auth": {
+    "signIn": {
+      "title": "С возвращением",
+      "subtitle": "Войдите в свой аккаунт, чтобы продолжить",
+      "submitButton": "Войти",
+      "noAccount": "Нет аккаунта?",
+      "signUpLink": "Зарегистрироваться"
+    },
+    "signUp": {
+      "title": "Присоединяйтесь к Lexara",
+      "subtitle": "Создайте аккаунт и начните организовывать",
+      "submitButton": "Зарегистрироваться",
+      "alreadyHaveAccount": "Уже есть аккаунт?",
+      "signInLink": "Войти"
+    },
+    "form": {
+      "name": "Имя",
+      "namePlaceholder": "Введите ваше полное имя",
+      "email": "Email",
+      "emailPlaceholder": "Введите ваш email",
+      "password": "Пароль",
+      "passwordPlaceholder": "Введите ваш пароль",
+      "confirmPassword": "Подтвердите пароль",
+      "confirmPasswordPlaceholder": "Подтвердите ваш пароль",
+      "forgotPassword": "Забыли пароль?",
+      "continueWith": "или продолжите с",
+      "signIn": {
+        "guestMode": "Войти как гость",
+        "submitting": "Вход...",
+        "button": "Войти"
+      },
+      "signUp": {
+        "submitting": "Создание аккаунта...",
+        "button": "Создать аккаунт"
+      }
+    },
+    "messages": {
+      "success": {
+        "signedIn": "Добро пожаловать!",
+        "accountCreated": "Аккаунт успешно создан!",
+        "guestMode": "Добро пожаловать, гость!"
+      },
+      "errors": {
+        "invalidCredentials": "Неверный email или пароль",
+        "accessDenied": "Доступ запрещен",
+        "generalError": "Что-то пошло не так. Попробуйте еще раз.",
+        "registrationFailed": "Ошибка регистрации",
+        "guestSignInFailed": "Не удалось войти как гость",
+        "submissionError": "Произошла ошибка. Попробуйте еще раз."
+      },
+      "info": {
+        "forgotPasswordSoon": "Функция восстановления пароля скоро появится!"
+      }
+    },
+    "validation": {
+      "nameRequired": "Имя обязательно",
+      "emailInvalid": "Неверный email адрес",
+      "passwordMinLength": "Пароль должен содержать минимум 6 символов",
+      "confirmPasswordMinLength": "Пароль должен содержать минимум 6 символов",
+      "passwordsNotMatch": "Пароли не совпадают"
+    }
   }
 }

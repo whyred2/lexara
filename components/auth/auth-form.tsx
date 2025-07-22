@@ -4,7 +4,10 @@ import * as React from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { useLocale, useTranslations } from "next-intl";
 
 import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { Label } from "@/components/ui/label";
@@ -12,8 +15,9 @@ import { Input } from "@/components/ui/input";
 import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 
-import { userAuthSchema } from "@/lib/validation/auth";
+import { createUserAuthSchema } from "@/lib/validation/auth";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 type FormData = {
   name?: string;
@@ -28,22 +32,43 @@ interface AuthFormProps {
 
 export const AuthForm = ({ isSignIn }: AuthFormProps) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isShowingPassword, setIsShowingPassword] =
+    React.useState<boolean>(false);
+
+  const router = useRouter();
+  const { data: session } = useSession();
+
+  const locale = useLocale();
+  const t = useTranslations("Auth.form");
+  const tMessages = useTranslations("Auth.messages");
+  const tAuth = useTranslations("Auth.validation");
+
+  // Создайте схему с переводами
+  const authSchema = React.useMemo(() => {
+    return createUserAuthSchema(tAuth);
+  }, [tAuth]);
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-    reset,
   } = useForm<FormData>({
     resolver: zodResolver(
-      isSignIn
-        ? userAuthSchema.pick({ email: true, password: true })
-        : userAuthSchema,
+      isSignIn ? authSchema.pick({ email: true, password: true }) : authSchema,
     ),
   });
 
+  // Redirect if already authenticated
+  React.useEffect(() => {
+    if (session) {
+      router.push("/dashboard");
+    }
+  }, [session, router]);
+
   async function onSubmit(data: FormData) {
     setIsLoading(true);
+    toast.dismiss();
+
     try {
       if (isSignIn) {
         const result = await signIn("credentials", {
@@ -53,24 +78,81 @@ export const AuthForm = ({ isSignIn }: AuthFormProps) => {
         });
 
         if (result?.error) {
-          console.error("Sign in error:", result.error);
-        } else {
-          console.log("Signed in successfully");
+          switch (result.error) {
+            case "CredentialsSignin":
+              toast.error(tMessages("errors.invalidCredentials"));
+              break;
+            case "AccessDenied":
+              toast.error(tMessages("errors.accessDenied"));
+              break;
+            default:
+              toast.error(tMessages("errors.generalError"));
+          }
+        } else if (result?.ok) {
+          toast.success(tMessages("success.signedIn"));
+          router.push("/dashboard");
         }
       } else {
-        console.log("Registration data:", data);
+        const response = await fetch("/api/auth", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept-Language": locale,
+          },
+          body: JSON.stringify({
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            locale,
+          }),
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(
+            error.message || tMessages("errors.registrationFailed"),
+          );
+        }
+
+        toast.success(tMessages("success.accountCreated"));
+
+        const signInResult = await signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: false,
+        });
+
+        if (signInResult?.ok) {
+          router.push("/dashboard");
+        }
       }
-      reset();
     } catch (error) {
       console.error("Submission error:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : tMessages("errors.submissionError"),
+      );
     } finally {
       setIsLoading(false);
     }
   }
 
+  const handleGuestSignIn = async () => {
+    setIsLoading(true);
+    try {
+      toast.success(tMessages("success.guestMode"));
+      router.push("/dashboard?mode=guest");
+    } catch (error) {
+      toast.error(tMessages("errors.guestSignInFailed"));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="w-120 space-y-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="grid">
+    <div className="w-full max-w-md space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)}>
         {/* Name field */}
         <AnimatePresence>
           {!isSignIn && (
@@ -80,21 +162,22 @@ export const AuthForm = ({ isSignIn }: AuthFormProps) => {
               animate={{ opacity: 1, scaleY: 1, originY: 0, height: "auto" }}
               exit={{ opacity: 0, scaleY: 0, originY: 0, height: 0 }}
               transition={{ type: "spring", bounce: 0.25, duration: 0.4 }}
+              className="origin-top overflow-hidden"
             >
-              <div className="mb-4 grid space-y-1">
-                <div className="grid space-y-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    placeholder="Enter your name"
-                    type="text"
-                    {...register("name")}
-                    disabled={isLoading}
-                    isError={!!errors.name}
-                  />
-                </div>
+              <div className="mb-4 grid space-y-2">
+                <Label htmlFor="name">{t("name")}</Label>
+                <Input
+                  id="name"
+                  placeholder={t("namePlaceholder")}
+                  type="text"
+                  {...register("name")}
+                  disabled={isLoading}
+                  isError={!!errors.name}
+                />
                 {errors.name && (
-                  <p className="text-sm text-red-500">{errors.name.message}</p>
+                  <p className="-mt-1 text-sm text-red-500">
+                    {errors.name.message}
+                  </p>
                 )}
               </div>
             </motion.div>
@@ -102,38 +185,66 @@ export const AuthForm = ({ isSignIn }: AuthFormProps) => {
         </AnimatePresence>
 
         {/* Email field */}
-        <div className="z-10 mb-4 grid space-y-1">
-          <div className="grid space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              placeholder="Enter your email"
-              type="email"
-              {...register("email")}
-              disabled={isLoading}
-              isError={!!errors.email}
-            />
-          </div>
+        <div className="mb-4 grid space-y-2">
+          <Label htmlFor="email">{t("email")}</Label>
+          <Input
+            id="email"
+            placeholder={t("emailPlaceholder")}
+            type="email"
+            {...register("email")}
+            disabled={isLoading}
+            isError={!!errors.email}
+          />
           {errors.email && (
-            <p className="text-sm text-red-500">{errors.email.message}</p>
+            <p className="-mt-1 text-sm text-red-500">{errors.email.message}</p>
           )}
         </div>
 
         {/* Password field */}
-        <div className="z-10 mb-4 grid space-y-1">
-          <div className="grid space-y-2">
-            <Label htmlFor="password">Password</Label>
+        <div className="mb-4 grid space-y-2">
+          <div className="flex w-full items-center justify-between">
+            <Label htmlFor="password">{t("password")}</Label>
+            {isSignIn && (
+              <Link
+                href="/auth/forgot-password"
+                className="font-light text-white/80 underline-offset-4 hover:underline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  toast.info(tMessages("info.forgotPasswordSoon"));
+                }}
+              >
+                {t("forgotPassword")}
+              </Link>
+            )}
+          </div>
+          <div className="relative">
             <Input
               id="password"
-              placeholder="Enter your password"
-              type="password"
+              placeholder={t("passwordPlaceholder")}
+              type={isShowingPassword ? "text" : "password"}
               {...register("password")}
               disabled={isLoading}
               isError={!!errors.password}
+              className="w-full pr-12"
             />
+            <button
+              type="button"
+              className="absolute top-1/2 right-4 -translate-y-1/2"
+              onClick={() => setIsShowingPassword((prev) => !prev)}
+              disabled={isLoading}
+              aria-label={isShowingPassword ? "Hide password" : "Show password"}
+            >
+              {isShowingPassword ? (
+                <Icons.eyeOff className="size-6" />
+              ) : (
+                <Icons.eye className="size-6" />
+              )}
+            </button>
           </div>
           {errors.password && (
-            <p className="text-sm text-red-500">{errors.password.message}</p>
+            <p className="-mt-1 text-sm text-red-500">
+              {errors.password.message}
+            </p>
           )}
         </div>
 
@@ -146,21 +257,38 @@ export const AuthForm = ({ isSignIn }: AuthFormProps) => {
               animate={{ opacity: 1, scaleY: 1, originY: 0, height: "auto" }}
               exit={{ opacity: 0, scaleY: 0, originY: 0, height: 0 }}
               transition={{ type: "spring", bounce: 0.25, duration: 0.4 }}
+              className="origin-top overflow-hidden"
             >
-              <div className="mb-4 grid space-y-1">
-                <div className="grid space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <div className="mb-4 grid space-y-2">
+                <Label htmlFor="confirmPassword">{t("confirmPassword")}</Label>
+                <div className="relative">
                   <Input
                     id="confirmPassword"
-                    placeholder="Confirm your password"
-                    type="password"
+                    placeholder={t("confirmPasswordPlaceholder")}
+                    type={isShowingPassword ? "text" : "password"}
                     {...register("confirmPassword")}
                     disabled={isLoading}
                     isError={!!errors.confirmPassword}
+                    className="w-full pr-12"
                   />
+                  <button
+                    type="button"
+                    className="absolute top-1/2 right-4 -translate-y-1/2"
+                    onClick={() => setIsShowingPassword((prev) => !prev)}
+                    disabled={isLoading}
+                    aria-label={
+                      isShowingPassword ? "Hide password" : "Show password"
+                    }
+                  >
+                    {isShowingPassword ? (
+                      <Icons.eyeOff className="size-6" />
+                    ) : (
+                      <Icons.eye className="size-6" />
+                    )}
+                  </button>
                 </div>
                 {errors.confirmPassword && (
-                  <p className="text-sm text-red-500">
+                  <p className="-mt-1 text-sm text-red-500">
                     {errors.confirmPassword.message}
                   </p>
                 )}
@@ -182,28 +310,39 @@ export const AuthForm = ({ isSignIn }: AuthFormProps) => {
             {isLoading && <Icons.loader className="size-5 animate-spin" />}
             {isSignIn
               ? isLoading
-                ? "Signing In"
-                : "Sign In"
+                ? t("signIn.submitting")
+                : t("signIn.button")
               : isLoading
-                ? "Creating Account"
-                : "Create Account"}
+                ? t("signUp.submitting")
+                : t("signUp.button")}
           </span>
         </button>
       </form>
 
-      {/* OAuth Buttons */}
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
+      {/* Guest Sign In - только для Sign In */}
+      {isSignIn && (
+        <button
+          type="button"
+          className={cn(buttonVariants({ variant: "secondary" }), "w-full")}
+          onClick={handleGuestSignIn}
+          disabled={isLoading}
+        >
+          <Icons.user className="size-5" />
+          {t("signIn.guestMode")}
+        </button>
+      )}
+
+      {/* Divider */}
+      <div className="flex items-center">
+        <div className="h-px w-full flex-1 bg-white/10" />
+        <div className="flex justify-center text-xs uppercase">
+          <span className="px-3">{t("continueWith")}</span>
         </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background text-muted-foreground px-2">
-            Or continue with
-          </span>
-        </div>
+        <div className="h-px w-full flex-1 bg-white/10" />
       </div>
 
-      <OAuthButtons isLoading={isLoading} signIn={signIn} />
+      {/* OAuth Buttons */}
+      <OAuthButtons isLoading={isLoading} />
     </div>
   );
 };

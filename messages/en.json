@@ -135,13 +135,76 @@
       }
     }
   },
+  "Auth": {
+    "signIn": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to your account to continue",
+      "submitButton": "Sign In",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign Up"
+    },
+    "signUp": {
+      "title": "Join Lexara",
+      "subtitle": "Create your account and start organizing",
+      "submitButton": "Sign Up",
+      "alreadyHaveAccount": "Already have an account?",
+      "signInLink": "Sign In"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Enter your full name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "forgotPassword": "Forgot password?",
+      "continueWith": "or continue with",
+      "signIn": {
+        "guestMode": "Continue as Guest",
+        "submitting": "Signing In...",
+        "button": "Sign In"
+      },
+      "signUp": {
+        "submitting": "Creating Account...",
+        "button": "Create Account"
+      }
+    },
+    "messages": {
+      "success": {
+        "signedIn": "Welcome back!",
+        "accountCreated": "Account created successfully!",
+        "guestMode": "Welcome, Guest!"
+      },
+      "errors": {
+        "invalidCredentials": "Invalid email or password",
+        "accessDenied": "Access denied",
+        "generalError": "Something went wrong. Please try again.",
+        "registrationFailed": "Registration failed",
+        "guestSignInFailed": "Failed to sign in as guest",
+        "submissionError": "An error occurred. Please try again."
+      },
+      "info": {
+        "forgotPasswordSoon": "Forgot password feature coming soon!"
+      }
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "emailInvalid": "Invalid email address",
+      "passwordMinLength": "Password must be at least 6 characters long",
+      "confirmPasswordMinLength": "Confirm Password must be at least 6 characters long",
+      "passwordsNotMatch": "Passwords do not match"
+    }
+  },
   "Header": {
     "dashboard": "Dashboard",
     "pricing": "Pricing",
     "about": "About",
     "auth": {
       "signIn": "Sign In",
-      "signUp": "Sign Up"
+      "signUp": "Sign Up",
+      "signOut": "Sign Out"
     }
   },
   "Footer": {
