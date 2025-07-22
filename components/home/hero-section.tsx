@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 import { MacWindow } from "@/components/ui/home-ui";
 import { buttonVariants } from "@/components/ui/button";
@@ -14,6 +14,7 @@ export const HeroSection = () => {
   const [mounted, setMounted] = React.useState<boolean>(false);
   const { theme } = useTheme();
   const t = useTranslations("Home.HeroSection");
+  const locale = useLocale();
 
   React.useEffect(() => {
     setMounted(true);
@@ -36,7 +37,12 @@ export const HeroSection = () => {
     >
       <div className="mx-auto flex h-full w-[90%] flex-col items-center">
         {/* Text Content */}
-        <h1 className="text-6xl leading-tight font-bold">
+        <h1
+          className={cn(
+            "leading-tight font-bold",
+            locale === "ru" ? "text-5xl" : "text-6xl",
+          )}
+        >
           {t("title")} <span className="text-primary">Lexara</span>
         </h1>
         <p className="mx-auto mt-8 text-lg text-black/80 dark:text-white/80">

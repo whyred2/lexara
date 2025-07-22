@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  transpilePackages: ["next-intl"],
 };
 
 const withNextIntl = createNextIntlPlugin();

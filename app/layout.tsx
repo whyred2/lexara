@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Bounce, ToastContainer } from "react-toastify";
 import { Analytics } from "@vercel/analytics/next";
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale } from "next-intl/server";
+import { getLocale, getMessages } from "next-intl/server";
 import localFont from "next/font/local";
 
 import { ClientProviders } from "@/components/client-providers";
@@ -26,12 +26,21 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = await getLocale();
+  let locale, messages;
+
+  try {
+    locale = await getLocale();
+    messages = await getMessages();
+  } catch (error) {
+    console.error("Layout i18n error:", error);
+    locale = "en";
+    messages = {};
+  }
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={cn("antialiased", fontMontserrat.className)}>
-        <NextIntlClientProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <Analytics />
           <Dev />
           <ToastContainer
