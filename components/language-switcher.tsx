@@ -31,8 +31,7 @@ export function LanguageSwitcher() {
   };
 
   const handleLocaleChange = (newLocale: string) => {
-    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
-    // Обновляем страницу для перезагрузки локали
+    document.cookie = `locale=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
     router.refresh();
   };
 
