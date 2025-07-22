@@ -1,38 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
-import { useLanguageSwitcher } from "@/hooks/use-language-switcher";
+import { useTranslations } from "next-intl";
 
-import {
-  Select,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { buttonVariants } from "@/components/ui/button";
-import { Icons } from "@/components/icons";
+import { LanguageSwitcher } from "@/components/language-switcher";
+
 import { cn } from "@/lib/utils";
 
 export const Footer = () => {
-  const locale = useLocale();
   const t = useTranslations("Footer");
-  const { currentLocale, switchLanguage } = useLanguageSwitcher();
-
-  const getLanguageDisplayName = (locale: string) => {
-    switch (locale) {
-      case "en":
-        return "English";
-      case "ru":
-        return "Русский";
-      case "ua":
-        return "Українська";
-      default:
-        return "English";
-    }
-  };
 
   return (
     <footer className="relative mt-20 w-full bg-gradient-to-b to-emerald-950">
@@ -211,29 +189,7 @@ export const Footer = () => {
             </div>
 
             <div className="flex items-center gap-2">
-              <Select
-                value={currentLocale}
-                onValueChange={(value: "en" | "ru" | "ua") =>
-                  switchLanguage(value)
-                }
-              >
-                <SelectTrigger
-                  className={cn(
-                    locale === "ru" || locale === "ua" ? "w-46" : "w-40",
-                  )}
-                  aria-label="Language Selector"
-                >
-                  <Icons.globe className="h-5 w-5" />
-                  <SelectValue>
-                    {getLanguageDisplayName(currentLocale)}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="en">English</SelectItem>
-                  <SelectItem value="ua">Українська</SelectItem>
-                  <SelectItem value="ru">Русский</SelectItem>
-                </SelectContent>
-              </Select>
+              <LanguageSwitcher />
             </div>
           </div>
         </div>
