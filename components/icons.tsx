@@ -107,6 +107,7 @@ export const Icons = {
 
   githubLight: (props: React.SVGProps<SVGSVGElement>) =>
     githubLight({ ...props }),
+
   githubDark: (props: React.SVGProps<SVGSVGElement>) =>
     githubDark({ ...props }),
 };
