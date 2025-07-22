@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useLocale, useTranslations } from "next-intl";
 
-import { OAuthButtons } from "@/components/auth/oauth-buttons";
+// import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { buttonVariants } from "@/components/ui/button";
@@ -342,8 +342,8 @@ export const AuthForm = ({ isSignIn }: AuthFormProps) => {
         <div className="h-px w-full flex-1 bg-white/10" />
       </div>
 
-      {/* OAuth Buttons */}
-      <OAuthButtons isLoading={isLoading} />
+      {/* OAuth Buttons 
+      <OAuthButtons isLoading={isLoading} />*/}
     </div>
   );
 };
