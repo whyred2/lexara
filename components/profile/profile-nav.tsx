@@ -54,16 +54,6 @@ const settingsItems = [
   },
 ];
 
-const dangerItems = [
-  {
-    title: "Delete Account",
-    href: "/settings/delete-account",
-    icon: Trash2,
-    description: "Permanently delete your account",
-    danger: true,
-  },
-];
-
 export function SettingsNav() {
   const pathname = usePathname();
 
