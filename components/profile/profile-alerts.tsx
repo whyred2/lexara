@@ -157,8 +157,8 @@ export const UnlinkAccountDialog = ({
         <AlertDialogHeader>
           <AlertDialogTitle>Unlink {provider.name} Account</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to unlink this account? You won't be able to
-            sign in with {provider.name} until you connect it again.
+            Are you sure you want to unlink this account? You won&apos;t be able
+            to sign in with {provider.name} until you connect it again.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

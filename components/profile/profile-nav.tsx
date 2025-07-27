@@ -8,14 +8,11 @@ import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import {
   User,
-  Settings,
   CreditCard,
-  Shield,
   Bell,
   Palette,
   Database,
   Key,
-  Globe,
   Trash2,
 } from "lucide-react";
 
