@@ -6,15 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
 
 import { cn } from "@/lib/utils";
-import {
-  User,
-  CreditCard,
-  Bell,
-  Palette,
-  Database,
-  Key,
-  Trash2,
-} from "lucide-react";
+import { User, CreditCard, Bell, Palette, Database, Key } from "lucide-react";
 
 const settingsItems = [
   {
