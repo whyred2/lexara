@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { prisma } from "@/lib/prisma";
 import { userAuthSchema } from "@/lib/validation/auth";
+import { generateUniqueNickname } from "@/lib/utils/nickname";
 
 const registerSchema = userAuthSchema.omit({ confirmPassword: true });
 
@@ -58,18 +59,39 @@ export async function POST(req: NextRequest) {
 
     const hashedPassword = await bcrypt.hash(validatedData.password, 12);
 
-    const user = await prisma.user.create({
-      data: {
-        name: validatedData.name,
-        email: validatedData.email,
-        password: hashedPassword,
-      },
+    // Генерируем уникальный никнейм
+    const nickname = await generateUniqueNickname();
+
+    // Используем транзакцию для создания пользователя и аккаунта
+    const result = await prisma.$transaction(async (tx) => {
+      // Создаём пользователя с автогенерированным никнеймом
+      const user = await tx.user.create({
+        data: {
+          name: validatedData.name,
+          email: validatedData.email,
+          password: hashedPassword,
+          nickname,
+        },
+      });
+
+      // Создаём запись в таблице Account для credentials
+      await tx.account.create({
+        data: {
+          userId: user.id,
+          type: "credentials",
+          provider: "credentials",
+          providerAccountId: validatedData.email,
+        },
+      });
+
+      return user;
     });
 
     return NextResponse.json(
       {
         message: getTranslation(userLocale, "userCreated"),
-        userId: user.id,
+        userId: result.id,
+        nickname: result.nickname,
       },
       { status: 201 },
     );

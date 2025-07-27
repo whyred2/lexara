@@ -61,7 +61,7 @@ export const AuthForm = ({ isSignIn }: AuthFormProps) => {
   // Redirect if already authenticated
   React.useEffect(() => {
     if (session) {
-      router.push("/dashboard");
+      router.push("/profile");
     }
   }, [session, router]);
 

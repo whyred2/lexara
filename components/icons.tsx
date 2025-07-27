@@ -20,6 +20,16 @@ import {
   LoaderCircle,
   Eye,
   EyeOff,
+  Calendar,
+  Mail,
+  Shield,
+  Edit,
+  Plus,
+  LogOut,
+  Unlink,
+  TriangleAlert,
+  Lock,
+  X,
   type Icon as LucideIcon,
 } from "lucide-react";
 
@@ -58,6 +68,17 @@ export const Icons = {
 
   eye: Eye,
   eyeOff: EyeOff,
+
+  calendar: Calendar,
+  mail: Mail,
+  shield: Shield,
+  edit: Edit,
+  plus: Plus,
+  logOut: LogOut,
+  unlink: Unlink,
+  triangleAlert: TriangleAlert,
+  lock: Lock,
+  x: X,
 
   windows: (props: React.SVGProps<SVGSVGElement>) => (
     <svg

@@ -7,6 +7,7 @@ import GitHubProvider from "next-auth/providers/github";
 
 import { prisma } from "@/lib/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { generateUniqueNickname } from "@/lib/utils/nickname";
 
 declare module "next-auth" {
   interface Session {
@@ -18,23 +19,11 @@ declare module "next-auth" {
   interface User {
     id: string;
     email: string;
+    nickname?: string;
   }
 }
 
 export const authOptions: NextAuthOptions = {
-  debug: process.env.NODE_ENV === "development",
-  logger: {
-    error(code, metadata) {
-      if (process.env.NODE_ENV === "development") {
-        console.error("NextAuth Error:", code, metadata);
-      }
-    },
-    warn(code) {
-      if (process.env.NODE_ENV === "development") {
-        console.warn("NextAuth Warning:", code);
-      }
-    },
-  },
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
@@ -91,6 +80,17 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  events: {
+    async createUser({ user }) {
+      if (!user.nickname) {
+        const nickname = await generateUniqueNickname();
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { nickname },
+        });
+      }
+    },
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -111,7 +111,20 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   pages: {
-    signIn: "/dashboard",
+    signIn: "/profile",
     error: "/auth",
+  },
+  debug: process.env.NODE_ENV === "development",
+  logger: {
+    error(code, metadata) {
+      if (process.env.NODE_ENV === "development") {
+        console.error("NextAuth Error:", code, metadata);
+      }
+    },
+    warn(code) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn("NextAuth Warning:", code);
+      }
+    },
   },
 };
