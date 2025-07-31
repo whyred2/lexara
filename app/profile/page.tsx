@@ -20,6 +20,23 @@ export default async function ProfilePage() {
           provider: true,
         },
       },
+      subscriptions: {
+        where: {
+          status: "ACTIVE",
+        },
+        include: {
+          plan: {
+            select: {
+              name: true,
+              displayName: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 1,
+      },
     },
   });
 

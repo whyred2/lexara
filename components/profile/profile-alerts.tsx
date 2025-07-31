@@ -188,7 +188,7 @@ export const SetEmailPasswordDialog = ({
       <DialogTrigger asChild>
         <Button
           variant="secondary"
-          className="size-10 p-0"
+          className="size-10 p-0 text-emerald-500 hover:text-emerald-600"
           disabled={isLoading}
         >
           {isConnecting === provider.id ? (

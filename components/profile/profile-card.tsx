@@ -16,9 +16,19 @@ import {
   UnlinkAccountDialog,
 } from "@/components/profile/profile-alerts";
 
+import { cn } from "@/lib/utils";
+
 interface ProfileCardProps {
   user: User & {
     accounts: Pick<Account, "provider">[];
+    subscriptions: Array<{
+      plan: {
+        name: string;
+        displayName: string;
+      };
+      status: string;
+      currentPeriodEnd: Date;
+    }>;
   };
 }
 
@@ -40,6 +50,11 @@ export function ProfileCard({ user }: ProfileCardProps) {
     user.nickname || "",
   );
   const [isSavingProfile, setIsSavingProfile] = React.useState<boolean>(false);
+
+  const currentPlan = user.subscriptions[0]?.plan || {
+    name: "personal",
+    displayName: "Personal",
+  };
 
   const getInitials = (name: string) => {
     return name
@@ -128,6 +143,7 @@ export function ProfileCard({ user }: ProfileCardProps) {
     setEditName(user.name || "");
     setEditNickname(user.nickname || "");
     setIsEditingProfile(true);
+    console.log(user);
   };
 
   // Проверяем какие аккаунты уже подключены
@@ -338,31 +354,31 @@ export function ProfileCard({ user }: ProfileCardProps) {
               <div className="rounded-xl border border-white/5 bg-white/2.5 p-4">
                 <label className="text-sm text-white/80">Account Status</label>
                 <div className="mt-1 flex items-center gap-2">
-                  <Badge
-                    variant="default"
-                    className="bg-emerald-600 hover:bg-emerald-700"
-                  >
+                  <Badge variant="default" className="bg-emerald-600">
                     Active
                   </Badge>
                   {user.emailVerified ? (
-                    <Badge
-                      variant="default"
-                      className="bg-emerald-600 hover:bg-emerald-700"
-                    >
+                    <Badge variant="default" className="bg-emerald-600">
                       Email Verified
-                      <span className="ml-2 text-xs text-white/60">
+                      <span className="ml-1 text-xs text-white/60">
                         {formatDate(user.emailVerified)}
                       </span>
                     </Badge>
                   ) : (
-                    <Badge
-                      variant="destructive"
-                      className="bg-amber-600 hover:bg-amber-700"
-                    >
-                      <Icons.triangleAlert className="mr-1 size-3" />
+                    <Badge variant="destructive" className="bg-amber-600">
                       Not Verified
                     </Badge>
                   )}
+                  <Badge
+                    variant="default"
+                    className={cn(
+                      currentPlan.name === "personal" && "bg-blue-400",
+                      currentPlan.name === "pro" && "bg-emerald-400",
+                      currentPlan.name === "team" && "bg-violet-400",
+                    )}
+                  >
+                    Plan: {currentPlan.displayName}
+                  </Badge>
                 </div>
               </div>
             </div>

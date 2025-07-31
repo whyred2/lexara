@@ -24,6 +24,19 @@ declare module "next-auth" {
 }
 
 export const authOptions: NextAuthOptions = {
+  debug: false,
+  logger: {
+    error(code, metadata) {
+      if (process.env.NODE_ENV === "development") {
+        console.error("NextAuth Error:", code, metadata);
+      }
+    },
+    warn(code) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn("NextAuth Warning:", code);
+      }
+    },
+  },
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
@@ -82,12 +95,41 @@ export const authOptions: NextAuthOptions = {
   ],
   events: {
     async createUser({ user }) {
-      if (!user.nickname) {
-        const nickname = await generateUniqueNickname();
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { nickname },
+      try {
+        if (!user.nickname) {
+          const nickname = await generateUniqueNickname();
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { nickname },
+          });
+        }
+
+        const existingSubscription = await prisma.userSubscription.findFirst({
+          where: { userId: user.id },
         });
+
+        if (!existingSubscription) {
+          const freePlan = await prisma.subscriptionPlan.findUnique({
+            where: { name: "personal" },
+          });
+
+          if (freePlan) {
+            const endDate = new Date();
+            endDate.setFullYear(endDate.getFullYear() + 100);
+
+            await prisma.userSubscription.create({
+              data: {
+                userId: user.id,
+                planId: freePlan.id,
+                status: "ACTIVE",
+                currentPeriodStart: new Date(),
+                currentPeriodEnd: endDate,
+              },
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Error in createUser event:", error);
       }
     },
   },
@@ -113,18 +155,5 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/profile",
     error: "/auth",
-  },
-  debug: process.env.NODE_ENV === "development",
-  logger: {
-    error(code, metadata) {
-      if (process.env.NODE_ENV === "development") {
-        console.error("NextAuth Error:", code, metadata);
-      }
-    },
-    warn(code) {
-      if (process.env.NODE_ENV === "development") {
-        console.warn("NextAuth Warning:", code);
-      }
-    },
   },
 };

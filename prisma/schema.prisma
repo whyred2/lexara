@@ -74,26 +74,24 @@ model VerificationToken {
 
 model SubscriptionPlan {
   id          String   @id @default(cuid())
-  name        String   @unique // "Personal", "Pro", "Premium"
-  displayName String   // "Personal Plan", "Pro Plan", "Premium Plan"
-  description String?
-  price       Decimal  @db.Decimal(10, 2) // 0.00, 9.99, 19.99
+  name        String   @unique
+  displayName String   
+  description String?  
+  price       Decimal  @db.Decimal(10, 2) // 0.00, 10.00, 25.00
   currency    String   @default("USD")
-  interval    String   // "month", "year"
-  intervalCount Int    @default(1) // каждый 1 месяц, каждые 6 месяцев
+  interval    String   @default("month")
+  intervalCount Int    @default(1)
   
-  // Лимиты плана
-  features    Json     // {"maxProjects": 5, "maxStorage": "10GB", "priority": true}
+  features    Json    
+  isPopular   Boolean  @default(false)
   isActive    Boolean  @default(true)
   
-  // Для интеграции с платежными системами
   stripeProductId String? @unique
   stripePriceId   String? @unique
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   
-  // Связи
   subscriptions UserSubscription[]
   
   @@map("subscription_plans")

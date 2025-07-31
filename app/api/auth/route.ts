@@ -62,7 +62,16 @@ export async function POST(req: NextRequest) {
     // Генерируем уникальный никнейм
     const nickname = await generateUniqueNickname();
 
-    // Используем транзакцию для создания пользователя и аккаунта
+    // Получаем бесплатный план
+    const freePlan = await prisma.subscriptionPlan.findUnique({
+      where: { name: "personal" },
+    });
+
+    if (!freePlan) {
+      throw new Error("Free plan not found");
+    }
+
+    // Используем транзакцию для создания пользователя, аккаунта и подписки
     const result = await prisma.$transaction(async (tx) => {
       // Создаём пользователя с автогенерированным никнеймом
       const user = await tx.user.create({
@@ -81,6 +90,20 @@ export async function POST(req: NextRequest) {
           type: "credentials",
           provider: "credentials",
           providerAccountId: validatedData.email,
+        },
+      });
+
+      // Создаём бесплатную подписку
+      const endDate = new Date();
+      endDate.setFullYear(endDate.getFullYear() + 100); // "Бесконечная" подписка для free плана
+
+      await tx.userSubscription.create({
+        data: {
+          userId: user.id,
+          planId: freePlan.id,
+          status: "ACTIVE",
+          currentPeriodStart: new Date(),
+          currentPeriodEnd: endDate,
         },
       });
 
