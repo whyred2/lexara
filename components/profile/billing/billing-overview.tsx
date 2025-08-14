@@ -1,6 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Icons } from "@/components/icons";
 
@@ -10,7 +8,7 @@ interface BillingOverviewProps {
   payments: Array<{
     id: string;
     amount: number;
-    description?: string;
+    description?: string | null; // Разрешаем null
     createdAt: string;
     status: "SUCCEEDED" | "FAILED" | "PENDING";
   }>;
@@ -120,7 +118,7 @@ export const BillingOverview = ({ payments }: BillingOverviewProps) => {
                 <p className="text-white/60">No recent activity</p>
               </div>
             ) : (
-              payments.slice(0, 3).map((payment: any) => (
+              payments.slice(0, 3).map((payment) => (
                 <div
                   key={payment.id}
                   className="flex items-center justify-between border-b border-white/5 py-3 last:border-0"

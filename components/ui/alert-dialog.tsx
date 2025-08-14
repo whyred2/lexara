@@ -358,8 +358,8 @@ const AlertDialogDescription = React.forwardRef<
 });
 AlertDialogDescription.displayName = "AlertDialogDescription";
 
-const makeButton = (variant: "action" | "cancel") =>
-  React.forwardRef<
+const makeButton = (variant: "action" | "cancel") => {
+  const ButtonComponent = React.forwardRef<
     HTMLButtonElement,
     AsChildProps & React.ButtonHTMLAttributes<HTMLButtonElement>
   >(({ asChild, className, children, onClick, ...rest }, ref) => {
@@ -370,10 +370,8 @@ const makeButton = (variant: "action" | "cancel") =>
     };
 
     if (asChild && React.isValidElement(children)) {
-      type ButtonChildProps = {
-        onClick?: React.MouseEventHandler<HTMLButtonElement>;
-        className?: string;
-      } & React.RefAttributes<HTMLButtonElement>;
+      type ButtonChildProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+        React.RefAttributes<HTMLButtonElement>;
 
       const child = children as React.ReactElement<ButtonChildProps>;
 
@@ -413,11 +411,12 @@ const makeButton = (variant: "action" | "cancel") =>
     );
   });
 
-const AlertDialogAction = makeButton("action");
-AlertDialogAction.displayName = "AlertDialogAction";
+  ButtonComponent.displayName = `AlertDialog${variant === "action" ? "Action" : "Cancel"}`;
+  return ButtonComponent;
+};
 
+const AlertDialogAction = makeButton("action");
 const AlertDialogCancel = makeButton("cancel");
-AlertDialogCancel.displayName = "AlertDialogCancel";
 
 export {
   AlertDialog,

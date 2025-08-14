@@ -357,10 +357,10 @@ const DialogDescription = React.forwardRef<
 DialogDescription.displayName = "DialogDescription";
 
 const DialogClose = ({
-  asChild,
   children,
   ...rest
-}: AsChildProps & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+}: Omit<AsChildProps, "asChild"> &
+  React.ButtonHTMLAttributes<HTMLButtonElement>) => {
   const { setOpen } = useDialog();
 
   // Если передан React-элемент — клонируем его, чтобы не вкладывать button в button.

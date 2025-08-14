@@ -75,9 +75,9 @@ export const PaymentDetails = () => {
   }, [reset]);
 
   // Показать ошибки формы через toast
-  const showFormErrors = (formErrors: typeof errors) => {
+  const showFormErrors = (formErrors: Record<string, { message?: string }>) => {
     const msgs = Object.values(formErrors)
-      .map((e) => (Array.isArray(e) ? e[0]?.message : e?.message))
+      .map((e) => e?.message)
       .filter(Boolean) as string[];
     if (msgs.length) {
       msgs.slice(0, 3).forEach((m) => toast.error(m));
@@ -131,7 +131,7 @@ export const PaymentDetails = () => {
 
       <CardContent>
         <form
-          onSubmit={handleSubmit(onSubmit, (e) => showFormErrors(e))}
+          onSubmit={handleSubmit(onSubmit, showFormErrors)}
           className="grid gap-4 md:grid-cols-2"
         >
           <div>

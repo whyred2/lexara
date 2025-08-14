@@ -14,6 +14,24 @@ import { PaymentMethods } from "@/components/profile/billing/payment-methods";
 import { PaymentDetails } from "@/components/profile/billing/payment-details";
 import { BillingOverview } from "@/components/profile/billing/billing-overview";
 
+// Типизируем платежи
+type Payment = {
+  id: string;
+  amount: number;
+  description?: string | null;
+  createdAt: Date;
+  status: "SUCCEEDED" | "FAILED" | "PENDING" | "REFUNDED";
+};
+
+// Создаём общий тип Payment для всех компонентов
+type PaymentData = {
+  id: string;
+  amount: number;
+  description?: string | null;
+  createdAt: string;
+  status: "SUCCEEDED" | "FAILED" | "PENDING";
+};
+
 function formatCurrencyUSD(amount: number) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -60,6 +78,14 @@ export default async function BillingPage() {
   const payments = currentSubscription?.payments || [];
   const isFreePlan = plan?.name === "personal";
 
+  const typedPayments: PaymentData[] = payments.map((p) => ({
+    id: p.id,
+    amount: Number(p.amount),
+    description: p.description,
+    createdAt: p.createdAt.toISOString(),
+    status: p.status as "SUCCEEDED" | "FAILED" | "PENDING",
+  }));
+
   const stats = {
     planName: plan?.displayName ?? "Personal",
     price: isFreePlan ? "Free" : formatCurrencyUSD(Number(plan?.price || 0)),
@@ -98,7 +124,7 @@ export default async function BillingPage() {
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
-          <BillingOverview payments={payments as any} />
+          <BillingOverview payments={typedPayments} />
         </TabsContent>
 
         <TabsContent value="payment-methods" className="space-y-4">
@@ -110,7 +136,7 @@ export default async function BillingPage() {
         </TabsContent>
 
         <TabsContent value="history" className="space-y-4">
-          <BillingHistory payments={payments as any} />
+          <BillingHistory payments={typedPayments} />
         </TabsContent>
       </Tabs>
     </div>

@@ -1,13 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "motion/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import { toast } from "react-toastify";
-import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import {
@@ -34,18 +32,7 @@ type Method = {
 
 export const PaymentMethods = () => {
   const [loading, setLoading] = React.useState(true);
-  const [submitting, setSubmitting] = React.useState(false);
   const [methods, setMethods] = React.useState<Method[]>([]);
-  const [showForm, setShowForm] = React.useState(false);
-
-  const [form, setForm] = React.useState({
-    brand: "visa",
-    last4: "",
-    expMonth: "",
-    expYear: "",
-    name: "",
-    setDefault: true,
-  });
 
   const load = React.useCallback(async () => {
     setLoading(true);
@@ -65,41 +52,6 @@ export const PaymentMethods = () => {
   React.useEffect(() => {
     load();
   }, [load]);
-
-  const addMethod = async () => {
-    setSubmitting(true);
-    try {
-      const payload = {
-        brand: form.brand,
-        last4: form.last4.trim(),
-        expMonth: Number(form.expMonth),
-        expYear: Number(form.expYear),
-        name: form.name?.trim() || undefined,
-        setDefault: form.setDefault,
-      };
-      const res = await fetch("/api/billing/payment-methods", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error();
-      await load();
-      setShowForm(false);
-      setForm({
-        brand: "visa",
-        last4: "",
-        expMonth: "",
-        expYear: "",
-        name: "",
-        setDefault: true,
-      });
-      toast.success("Card added");
-    } catch {
-      toast.error("Failed to add card");
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   const setDefault = async (id: string) => {
     try {
@@ -257,8 +209,6 @@ export const PaymentMethods = () => {
           </div>
         )}
       </CardContent>
-
-      {/* Add card form */}
     </Card>
   );
 };
