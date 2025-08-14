@@ -16,7 +16,7 @@ import {
   UnlinkAccountDialog,
 } from "@/components/profile/profile-alerts";
 
-import { cn } from "@/lib/utils";
+import { cn, formatDate, getInitials } from "@/lib/utils";
 
 interface ProfileCardProps {
   user: User & {
@@ -35,6 +35,7 @@ interface ProfileCardProps {
 export function ProfileCard({ user }: ProfileCardProps) {
   const [isUnlinking, setIsUnlinking] = React.useState<string | null>(null);
   const [isConnecting, setIsConnecting] = React.useState<string | null>(null);
+
   const [newPassword, setNewPassword] = React.useState<string>("");
   const [confirmPassword, setConfirmPassword] = React.useState<string>("");
   const [isSettingPassword, setIsSettingPassword] =
@@ -42,7 +43,6 @@ export function ProfileCard({ user }: ProfileCardProps) {
   const [isSendingVerification, setIsSendingVerification] =
     React.useState<boolean>(false);
 
-  // Состояния для модального окна редактирования профиля
   const [isEditingProfile, setIsEditingProfile] =
     React.useState<boolean>(false);
   const [editName, setEditName] = React.useState<string>(user.name || "");
@@ -56,22 +56,30 @@ export function ProfileCard({ user }: ProfileCardProps) {
     displayName: "Personal",
   };
 
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
+  const connectedProviders = user.accounts.map((account) => account.provider);
 
-  const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }).format(new Date(date));
-  };
+  const allProviders = [
+    {
+      id: "google",
+      name: "Google",
+      icon: Icons.google,
+      connected: connectedProviders.includes("google"),
+    },
+    {
+      id: "github",
+      name: "GitHub",
+      icon: Icons.githubLight,
+      connected: connectedProviders.includes("github"),
+    },
+    {
+      id: "credentials",
+      name: "Email",
+      icon: Icons.mail,
+      connected: connectedProviders.includes("credentials"),
+    },
+  ];
+
+  const connectedCount = allProviders.filter((p) => p.connected).length;
 
   const handleSendVerificationEmail = async () => {
     setIsSendingVerification(true);
@@ -93,6 +101,12 @@ export function ProfileCard({ user }: ProfileCardProps) {
     } finally {
       setIsSendingVerification(false);
     }
+  };
+
+  const handleEditProfile = () => {
+    setEditName(user.name || "");
+    setEditNickname(user.nickname || "");
+    setIsEditingProfile(true);
   };
 
   const handleSaveProfile = async () => {
@@ -138,38 +152,6 @@ export function ProfileCard({ user }: ProfileCardProps) {
       setIsSavingProfile(false);
     }
   };
-
-  const handleEditProfile = () => {
-    setEditName(user.name || "");
-    setEditNickname(user.nickname || "");
-    setIsEditingProfile(true);
-    console.log(user);
-  };
-
-  // Проверяем какие аккаунты уже подключены
-  const connectedProviders = user.accounts.map((account) => account.provider);
-
-  // Все доступные провайдеры
-  const allProviders = [
-    {
-      id: "google",
-      name: "Google",
-      icon: Icons.google,
-      connected: connectedProviders.includes("google"),
-    },
-    {
-      id: "github",
-      name: "GitHub",
-      icon: Icons.githubLight,
-      connected: connectedProviders.includes("github"),
-    },
-    {
-      id: "credentials",
-      name: "Email",
-      icon: Icons.mail,
-      connected: connectedProviders.includes("credentials"),
-    },
-  ];
 
   // Функция для подключения аккаунта
   const handleConnectAccount = async (provider: string) => {
@@ -269,8 +251,6 @@ export function ProfileCard({ user }: ProfileCardProps) {
     return true;
   };
 
-  const connectedCount = allProviders.filter((p) => p.connected).length;
-
   return (
     <>
       {!user.emailVerified && (
@@ -303,7 +283,7 @@ export function ProfileCard({ user }: ProfileCardProps) {
             <div className="flex items-center space-x-4">
               <Avatar className="size-20">
                 <AvatarImage src={user.image || ""} alt={user.name || ""} />
-                <AvatarFallback className="bg-emerald-600 text-xl text-white">
+                <AvatarFallback className="bg-emerald-600 text-2xl font-bold text-white">
                   {getInitials(user.name || "U")}
                 </AvatarFallback>
               </Avatar>

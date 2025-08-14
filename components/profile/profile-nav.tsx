@@ -6,7 +6,15 @@ import { buttonVariants } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
 
 import { cn } from "@/lib/utils";
-import { User, CreditCard, Bell, Palette, Database, Key } from "lucide-react";
+import {
+  User,
+  CreditCard,
+  Bell,
+  Palette,
+  Database,
+  Key,
+  Users,
+} from "lucide-react";
 
 const settingsItems = [
   {
@@ -20,6 +28,12 @@ const settingsItems = [
     href: "/profile/billing",
     icon: CreditCard,
     description: "Payment methods & subscription",
+  },
+  {
+    title: "Sessions",
+    href: "/profile/sessions",
+    icon: Users,
+    description: "Active sessions & devices",
   },
   {
     title: "Notifications",
@@ -50,10 +64,10 @@ export function SettingsNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex h-[calc(100vh-2rem)] flex-col justify-between space-y-2 rounded-2xl border border-white/5 bg-white/2.5 p-4">
+    <nav className="flex h-[calc(100vh-2rem)] flex-col justify-between space-y-2 rounded-3xl bg-white/5 p-4">
       <div>
         <h1>
-          <div className="mb-4 text-2xl font-bold">Settings</div>
+          <div className="mb-4 ml-2 text-2xl font-bold">Settings</div>
         </h1>
 
         <div className="space-y-1">

@@ -30,6 +30,15 @@ import {
   TriangleAlert,
   Lock,
   X,
+  Crown,
+  CreditCard,
+  MoveHorizontal,
+  MoreHorizontal,
+  FileText,
+  Download,
+  DollarSign,
+  Trash2,
+  Activity,
   type Icon as LucideIcon,
 } from "lucide-react";
 
@@ -79,6 +88,16 @@ export const Icons = {
   triangleAlert: TriangleAlert,
   lock: Lock,
   x: X,
+
+  crown: Crown,
+  creditCard: CreditCard,
+  moveHorizontal: MoveHorizontal,
+  moreHorizontal: MoreHorizontal,
+  fileText: FileText,
+  download: Download,
+  dollarSign: DollarSign,
+  trash2: Trash2,
+  activity: Activity,
 
   windows: (props: React.SVGProps<SVGSVGElement>) => (
     <svg

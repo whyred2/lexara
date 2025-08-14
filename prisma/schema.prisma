@@ -59,6 +59,9 @@ model User {
   subscriptions UserSubscription[]
   usageRecords  UsageRecord[]
 
+  paymentMethods PaymentMethod[]
+  billingProfile BillingProfile?
+
   @@map("users")
 }
 
@@ -158,6 +161,44 @@ model Payment {
   subscription UserSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
   
   @@map("payments")
+}
+
+// Способы оплаты (храним токенизированные/метаданные, без PAN)
+model PaymentMethod {
+  id        String   @id @default(cuid())
+  userId    String
+  brand     String   // 'visa' | 'mastercard' | 'amex' | ...
+  last4     String   // последние 4
+  expMonth  Int
+  expYear   Int
+  isDefault Boolean  @default(false)
+  name      String?  // имя держателя
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("payment_methods")
+}
+
+// Платежные реквизиты/адрес
+model BillingProfile {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  name          String?
+  surname       String?
+  country       String?
+  city          String?
+  addressLine1  String?
+  addressLine2  String?
+  postalCode    String?
+  receiptEmail  String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("billing_profiles")
 }
 
 // Использование функций (для отслеживания лимитов)
