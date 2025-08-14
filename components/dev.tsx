@@ -16,7 +16,8 @@ export const Dev = () => {
         hide && "translate-y-12 opacity-5 hover:opacity-100",
       )}
     >
-      Project is in development. Please check back later.
+      Project is in development. Please check back later. Last updated:
+      15.05.2025 0:13 (UTC+2)
     </div>
   );
 };

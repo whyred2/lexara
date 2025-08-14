@@ -57,7 +57,9 @@ export async function POST(req: NextRequest) {
     }
     const pm = await tx.paymentMethod.create({
       data: {
-        userId: session.user.id,
+        user: {
+          connect: { id: session.user.id },
+        },
         brand: data.brand,
         last4: data.last4,
         expMonth: data.expMonth,
