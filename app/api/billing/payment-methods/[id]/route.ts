@@ -6,14 +6,16 @@ import { prisma } from "@/lib/prisma";
 
 export async function DELETE(
   _: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  const { id } = await params;
+
   const pm = await prisma.paymentMethod.findFirst({
-    where: { id: params.id, userId: session.user.id },
+    where: { id, userId: session.user.id },
   });
   if (!pm) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
@@ -38,17 +40,18 @@ export async function DELETE(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+  const { id } = await params;
   const body = await req.json().catch(() => ({}));
   const setDefault = z.object({ isDefault: z.boolean() }).safeParse(body);
 
   const pm = await prisma.paymentMethod.findFirst({
-    where: { id: params.id, userId: session.user.id },
+    where: { id, userId: session.user.id },
   });
   if (!pm) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
