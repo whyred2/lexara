@@ -14,16 +14,6 @@ import { PaymentMethods } from "@/components/profile/billing/payment-methods";
 import { PaymentDetails } from "@/components/profile/billing/payment-details";
 import { BillingOverview } from "@/components/profile/billing/billing-overview";
 
-// Типизируем платежи
-type Payment = {
-  id: string;
-  amount: number;
-  description?: string | null;
-  createdAt: Date;
-  status: "SUCCEEDED" | "FAILED" | "PENDING" | "REFUNDED";
-};
-
-// Создаём общий тип Payment для всех компонентов
 type PaymentData = {
   id: string;
   amount: number;

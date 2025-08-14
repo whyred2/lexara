@@ -31,12 +31,7 @@ export const PaymentDetails = () => {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [saving, setSaving] = React.useState<boolean>(false);
 
-  const {
-    handleSubmit,
-    register,
-    reset,
-    formState: { errors },
-  } = useForm<Profile>({
+  const { handleSubmit, register, reset } = useForm<Profile>({
     resolver: zodResolver(billingProfileSchema),
     defaultValues: EMPTY_PROFILE,
     mode: "onSubmit",
