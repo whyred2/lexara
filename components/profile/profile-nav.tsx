@@ -95,14 +95,25 @@ export function SettingsNav() {
         </div>
       </div>
 
-      <div
-        onClick={() => signOut()}
-        className={cn(
-          buttonVariants({ variant: "ghost" }),
-          "w-full rounded-2xl",
-        )}
-      >
-        Sign Out
+      <div className="space-y-2">
+        <Link
+          href="/"
+          className={cn(
+            buttonVariants({ variant: "secondary" }),
+            "w-full rounded-2xl",
+          )}
+        >
+          Home
+        </Link>
+        <div
+          onClick={() => signOut()}
+          className={cn(
+            buttonVariants({ variant: "ghost" }),
+            "w-full rounded-2xl bg-red-600 hover:bg-red-800!",
+          )}
+        >
+          Sign Out
+        </div>
       </div>
     </nav>
   );

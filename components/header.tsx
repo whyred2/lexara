@@ -54,12 +54,22 @@ export const Header = ({ items }: HeaderProps) => {
             <div className="h-10 w-px bg-black/60 dark:bg-white/60" />
             {isAuthenticated ? (
               <div className="flex gap-2">
-                <button
-                  onClick={() => signOut()}
-                  className={buttonVariants({ variant: "default" })}
-                >
-                  {t("auth.signOut")}
-                </button>
+                <div className="flex gap-2">
+                  <Link
+                    href="/profile"
+                    className={buttonVariants({ variant: "secondary" })}
+                  >
+                    Profile
+                  </Link>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => signOut()}
+                    className={buttonVariants({ variant: "default" })}
+                  >
+                    {t("auth.signOut")}
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="flex gap-2">

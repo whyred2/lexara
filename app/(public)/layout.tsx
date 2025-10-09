@@ -1,5 +1,4 @@
 import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
 
 import { headerNavigationConfig } from "@/config/header-nav";
 
@@ -12,7 +11,6 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
     <div className="min-h-screen">
       <Header items={headerNavigationConfig.navigation} />
       {children}
-      <Footer />
     </div>
   );
 }

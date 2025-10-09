@@ -17,7 +17,7 @@ export const Dev = () => {
       )}
     >
       Project is in development. Please check back later. Last updated:
-      15.08.2025 0:20 (UTC+2)
+      09.10.2025 14:08 (UTC+2)
     </div>
   );
 };

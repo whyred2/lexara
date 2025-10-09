@@ -1,6 +1,8 @@
 import {
   ArrowLeft,
   ArrowRight,
+  ChevronLeft,
+  ChevronRight,
   Sun,
   Moon,
   SunMoon,
@@ -39,6 +41,9 @@ import {
   DollarSign,
   Trash2,
   Activity,
+  ClipboardPlus,
+  LucideHome,
+  Menu,
   type Icon as LucideIcon,
 } from "lucide-react";
 
@@ -51,6 +56,8 @@ export type Icon = typeof LucideIcon;
 export const Icons = {
   arrowLeft: ArrowLeft,
   arrowRight: ArrowRight,
+  chevronLeft: ChevronLeft,
+  chevronRight: ChevronRight,
 
   sun: Sun,
   moon: Moon,
@@ -98,6 +105,10 @@ export const Icons = {
   dollarSign: DollarSign,
   trash2: Trash2,
   activity: Activity,
+
+  clipboardPlus: ClipboardPlus,
+  home: LucideHome,
+  menu: Menu,
 
   windows: (props: React.SVGProps<SVGSVGElement>) => (
     <svg
